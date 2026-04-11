@@ -1,0 +1,50 @@
+<org.mp.sesion09.residencias.Residencia>
+  <nombre>La Mar Salá</nombre>
+  <residentes>
+    <org.mp.sesion09.residencias.Residente>
+      <dni>27272727</dni>
+      <nombre>Martinez Gomez, Adrian</nombre>
+      <sexo>V</sexo>
+      <fechaNacimiento>1940-02-12 00:00:00.0 UTC</fechaNacimiento>
+    </org.mp.sesion09.residencias.Residente>
+    <org.mp.sesion09.residencias.Residente>
+      <dni>27272728</dni>
+      <nombre>Lopez Lopez, Luisa</nombre>
+      <sexo>M</sexo>
+      <fechaNacimiento>1940-03-12 00:00:00.0 UTC</fechaNacimiento>
+    </org.mp.sesion09.residencias.Residente>
+  </residentes>
+  <habitaciones>
+    <org.mp.sesion09.residencias.Habitacion>
+      <numero>101</numero>
+    </org.mp.sesion09.residencias.Habitacion>
+    <org.mp.sesion09.residencias.Habitacion>
+      <numero>102</numero>
+    </org.mp.sesion09.residencias.Habitacion>
+    <org.mp.sesion09.residencias.Habitacion>
+      <numero>103</numero>
+    </org.mp.sesion09.residencias.Habitacion>
+    <org.mp.sesion09.residencias.Habitacion>
+      <numero>201</numero>
+    </org.mp.sesion09.residencias.Habitacion>
+    <org.mp.sesion09.residencias.Habitacion>
+      <numero>202</numero>
+    </org.mp.sesion09.residencias.Habitacion>
+  </habitaciones>
+  <reservas>
+    <org.mp.sesion09.residencias.Reserva>
+      <numeroReserva>1</numeroReserva>
+      <residente reference="../../../residentes/org.mp.sesion09.residencias.Residente"/>
+      <habitacion reference="../../../habitaciones/org.mp.sesion09.residencias.Habitacion"/>
+      <fechaInicio>2007-01-11 23:00:00.0 UTC</fechaInicio>
+      <fechaFin>2007-06-11 22:00:00.0 UTC</fechaFin>
+    </org.mp.sesion09.residencias.Reserva>
+    <org.mp.sesion09.residencias.Reserva>
+      <numeroReserva>2</numeroReserva>
+      <residente reference="../../../residentes/org.mp.sesion09.residencias.Residente[2]"/>
+      <habitacion reference="../../../habitaciones/org.mp.sesion09.residencias.Habitacion[2]"/>
+      <fechaInicio>2007-02-11 23:00:00.0 UTC</fechaInicio>
+      <fechaFin>2007-06-11 22:00:00.0 UTC</fechaFin>
+    </org.mp.sesion09.residencias.Reserva>
+  </reservas>
+</org.mp.sesion09.residencias.Residencia>

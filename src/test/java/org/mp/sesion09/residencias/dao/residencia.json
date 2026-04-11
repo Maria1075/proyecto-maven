@@ -1,0 +1,64 @@
+{
+  "nombre": "La Mar Salá",
+  "residentes": [
+    {
+      "dni": "27272727",
+      "nombre": "Martinez Gomez, Adrian",
+      "sexo": "V",
+      "fechaNacimiento": "Feb 12, 1940, 12:00:00 AM"
+    },
+    {
+      "dni": "27272728",
+      "nombre": "Lopez Lopez, Luisa",
+      "sexo": "M",
+      "fechaNacimiento": "Mar 12, 1940, 12:00:00 AM"
+    }
+  ],
+  "habitaciones": [
+    {
+      "numero": "101"
+    },
+    {
+      "numero": "102"
+    },
+    {
+      "numero": "103"
+    },
+    {
+      "numero": "201"
+    },
+    {
+      "numero": "202"
+    }
+  ],
+  "reservas": [
+    {
+      "numeroReserva": 1,
+      "residente": {
+        "dni": "27272727",
+        "nombre": "Martinez Gomez, Adrian",
+        "sexo": "V",
+        "fechaNacimiento": "Feb 12, 1940, 12:00:00 AM"
+      },
+      "habitacion": {
+        "numero": "101"
+      },
+      "fechaInicio": "Jan 12, 2007, 12:00:00 AM",
+      "fechaFin": "Jun 12, 2007, 12:00:00 AM"
+    },
+    {
+      "numeroReserva": 2,
+      "residente": {
+        "dni": "27272728",
+        "nombre": "Lopez Lopez, Luisa",
+        "sexo": "M",
+        "fechaNacimiento": "Mar 12, 1940, 12:00:00 AM"
+      },
+      "habitacion": {
+        "numero": "102"
+      },
+      "fechaInicio": "Feb 12, 2007, 12:00:00 AM",
+      "fechaFin": "Jun 12, 2007, 12:00:00 AM"
+    }
+  ]
+}
