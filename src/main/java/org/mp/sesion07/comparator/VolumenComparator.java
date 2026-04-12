@@ -17,7 +17,7 @@ public class VolumenComparator implements Comparator<Accion> {
 	 *
 	 * @param a1 Primera acción
 	 * @param a2 Segunda acción
-	 * @return -1 si a1 < a2, 1 si a1 > a2, 0 si son iguales
+	 * @return -1 si a1 es menor que a2, 1 si a1 es mayor que a2, 0 si son iguales
 	 */
 	@Override
 	public int compare(Accion a1, Accion a2) {

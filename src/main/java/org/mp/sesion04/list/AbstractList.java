@@ -32,7 +32,7 @@ public abstract class AbstractList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <p>
 	 * Esta implementación añade el elemento especificado al final de la lista,
-	 * utilizando la implementación de {@link #add(int, E)} con el índice igual al tamaño actual.
+	 * utilizando el método add(int, E) con el índice igual al tamaño actual.
 	 */
 	public void add(E e) {
 		add(size, e);

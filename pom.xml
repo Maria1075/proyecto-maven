@@ -36,7 +36,9 @@
                     <reportOutputDirectory>${basedir}/docs/javadoc</reportOutputDirectory>
                     <destDir>api</destDir>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <doclint>none</doclint>  <show>private</show> </configuration>
+                    <doclint>none</doclint>
+                    <show>private</show>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -45,6 +47,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
             </plugin>
         </plugins>
         <resources>
@@ -58,6 +65,16 @@
             </testResource>
         </testResources>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.6.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <dependencies>
         <dependency>

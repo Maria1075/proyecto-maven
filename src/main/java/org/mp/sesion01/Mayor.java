@@ -1,13 +1,13 @@
 /*
  * @author Maria Camila Soto Zapata
- * @sinse 2025
+ * @since 2025
  */
 package org.mp.sesion01;
 /**
  * La clase Mayor proporciona un metodo estatico para encontrar el valor entero mas grande
  * dentro de un array de enteros.
  *
- * Esta clase es util cuando se necesita determinar el elemento m<ximo en un conjunto de datos
+ * Esta clase es útil cuando se necesita determinar el elemento máximo en un conjunto de datos
  * representados como un array de enteros.
  */
 public class Mayor {

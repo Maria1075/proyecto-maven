@@ -160,7 +160,7 @@ public class ArrayList<E> extends AbstractList<E> {
 	}
 	/**
 	 * Devuelve la capacidad actual del array interno. Este método se proporciona
-	 * principalmente para pruebas y no forma parte de la interfaz {@link List}.
+	 * principalmente para pruebas y no forma parte de la interfaz {@link org.mp.sesion04.list.List}.
 	 *
 	 * @return La longitud del array interno.
 	 */

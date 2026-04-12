@@ -15,6 +15,7 @@ public class ArrayDinamico<T> {
     private int numElementos;
 
     
+    @SuppressWarnings("unchecked")
     public ArrayDinamico() {
 		super();
 		elementos = (T[]) new Object[10];
@@ -51,6 +52,7 @@ public class ArrayDinamico<T> {
     /**
      * Agrega un nuevo elemento al final del array. El tamaño aumenta en uno.
      */
+    @SuppressWarnings("unchecked")
     public void agregar(T elemento) {
     	
     	if (numElementos == elementos.length) {

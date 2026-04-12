@@ -1,5 +1,7 @@
 package org.mp.sesion05.pilas;
 
+import java.util.NoSuchElementException;
+
 /**
  * Interfaz para una estructura de datos tipo pila (stack).
  * Esta estructura de datos sigue el principio LIFO (Last In, First Out).
