@@ -33,18 +33,18 @@
   </habitaciones>
   <reservas>
     <org.mp.sesion09.residencias.Reserva>
-      <numeroReserva>1</numeroReserva>
+      <numeroReserva>132</numeroReserva>
       <residente reference="../../../residentes/org.mp.sesion09.residencias.Residente"/>
       <habitacion reference="../../../habitaciones/org.mp.sesion09.residencias.Habitacion"/>
-      <fechaInicio>2007-01-11 23:00:00.0 UTC</fechaInicio>
-      <fechaFin>2007-06-11 22:00:00.0 UTC</fechaFin>
+      <fechaInicio>2007-01-12 00:00:00.0 UTC</fechaInicio>
+      <fechaFin>2007-06-12 00:00:00.0 UTC</fechaFin>
     </org.mp.sesion09.residencias.Reserva>
     <org.mp.sesion09.residencias.Reserva>
-      <numeroReserva>2</numeroReserva>
+      <numeroReserva>133</numeroReserva>
       <residente reference="../../../residentes/org.mp.sesion09.residencias.Residente[2]"/>
       <habitacion reference="../../../habitaciones/org.mp.sesion09.residencias.Habitacion[2]"/>
-      <fechaInicio>2007-02-11 23:00:00.0 UTC</fechaInicio>
-      <fechaFin>2007-06-11 22:00:00.0 UTC</fechaFin>
+      <fechaInicio>2007-02-12 00:00:00.0 UTC</fechaInicio>
+      <fechaFin>2007-06-12 00:00:00.0 UTC</fechaFin>
     </org.mp.sesion09.residencias.Reserva>
   </reservas>
 </org.mp.sesion09.residencias.Residencia>

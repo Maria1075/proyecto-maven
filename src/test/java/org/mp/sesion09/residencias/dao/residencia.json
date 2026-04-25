@@ -33,7 +33,7 @@
   ],
   "reservas": [
     {
-      "numeroReserva": 1,
+      "numeroReserva": 136,
       "residente": {
         "dni": "27272727",
         "nombre": "Martinez Gomez, Adrian",
@@ -47,7 +47,7 @@
       "fechaFin": "Jun 12, 2007, 12:00:00 AM"
     },
     {
-      "numeroReserva": 2,
+      "numeroReserva": 137,
       "residente": {
         "dni": "27272728",
         "nombre": "Lopez Lopez, Luisa",
