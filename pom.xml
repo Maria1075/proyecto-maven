@@ -11,17 +11,17 @@
         <maven.surefire.version>3.2.5</maven.surefire.version>
         <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
         
-        <!-- ========== AÑADIDO SESIÓN 07 ========== -->
+        <!-- AÑADIDO SESIÓN 07 -->
         <jacoco.version>0.8.12</jacoco.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <pmd.version>7.4.0</pmd.version>           <!-- Versión compatible con Java 21 -->
+        <pmd.version>7.4.0</pmd.version>
         <spotbugs.version>4.8.6.0</spotbugs.version>
         <owasp.version>8.2.1</owasp.version>
     </properties>
 
     <build>
         <plugins>
-            <!-- Compiler Plugin (TUYO, intacto) -->
+            <!-- Compiler Plugin -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
@@ -30,7 +30,7 @@
                 </configuration>
             </plugin>
             
-            <!-- Surefire Plugin (TUYO, solo añadido argLine para JaCoCo) -->
+            <!-- Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -40,12 +40,11 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
-                    <!-- AÑADIDO: Necesario para que JaCoCo funcione -->
                     <argLine>@{argLine} -Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
             
-            <!-- Javadoc Plugin (TUYO, intacto) -->
+            <!-- Javadoc Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -67,15 +66,14 @@
                 </executions>
             </plugin>
             
-            <!-- Site Plugin (TUYO, intacto) -->
+            <!-- Site Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.1</version>
             </plugin>
 
-            
-            <!-- ========== AÑADIDO SESIÓN 07: JACOCO (COBERTURA) ========== -->
+            <!-- JACOCO (COBERTURA) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -94,7 +92,6 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
-                    <!-- Verificación de cobertura (NO FALLA EL BUILD si no alcanzas) -->
                     <execution>
                         <id>jacoco-check</id>
                         <goals>
@@ -119,7 +116,7 @@
                 </executions>
             </plugin>
             
-            <!-- ========== AÑADIDO SESIÓN 07: CHECKSTYLE (ESTILO) ========== -->
+            <!-- CHECKSTYLE (ESTILO) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -140,7 +137,7 @@
                 </executions>
             </plugin>
             
-            <!-- ========== AÑADIDO SESIÓN 07: PMD ========== -->
+            <!-- PMD -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
@@ -160,7 +157,7 @@
                 </executions>
             </plugin>
             
-            <!-- ========== AÑADIDO SESIÓN 07: SPOTBUGS ========== -->
+            <!-- SPOTBUGS -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -178,63 +175,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.12</version>
-              <executions>
-                <execution>
-                  <id>prepare-agent</id>
-                  <goals><goal>prepare-agent</goal></goals>
-                </execution>
-            <execution>
-                <id>report</id>
-                <phase>test</phase>
-                <goals><goal>report</goal></goals>
-            </execution>
-        <!-- Verificar cobertura mínima 90% -->
-            <execution>
-              <id>jacoco-check</id>
-              <goals><goal>check</goal></goals>
-              <configuration>
-                <rules>
-                  <rule>
-                    <element>PACKAGE</element>
-                    <limits>
-                      <limit>
-                        <counter>LINE</counter>
-                        <value>COVEREDRATIO</value>
-                        <minimum>0.9</minimum>
-                      </limit>
-                    </limits>
-                  </rule>
-                </rules>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-    
-        <!-- Surefire para tests -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.5.1</version>
-        </plugin>
-    
-        <!-- Checkstyle para estilo de código -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.6.0</version>
-          <executions>
-            <execution>
-              <phase>verify</phase>
-              <goals><goal>check</goal></goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </build>
         </plugins>
         
         <resources>
@@ -251,16 +191,12 @@
 
     <reporting>
         <plugins>
-            <!-- Plugin original TUYO -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.6.0</version>
             </plugin>
             
-            <!-- ========== AÑADIDO SESIÓN 07 ========== -->
-            
-            <!-- Reporte Checkstyle -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -274,7 +210,6 @@
                 </reportSets>
             </plugin>
             
-            <!-- Reporte PMD -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
@@ -284,14 +219,12 @@
                 </configuration>
             </plugin>
             
-            <!-- Reporte Spotbugs -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>${spotbugs.version}</version>
             </plugin>
             
-            <!-- Reporte JaCoCo -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -305,7 +238,6 @@
                 </reportSets>
             </plugin>
             
-            <!-- Reporte OWASP Dependency Check (Seguridad) -->
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -325,12 +257,10 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-            
         </plugins>
     </reporting>
 
     <dependencies>
-        <!-- Tus dependencias ORIGINALES, intactas -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -348,5 +278,4 @@
             <version>1.4.20</version>
         </dependency>
     </dependencies>
-</project>
 </project>
