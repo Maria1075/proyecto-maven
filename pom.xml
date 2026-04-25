@@ -3,20 +3,11 @@
     <groupId>ual.mp2025</groupId>
     <artifactId>SotoZapataMariaCamilaMP2025</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <junit.jupiter.version>5.11.3</junit.jupiter.version>
-        <maven.surefire.version>3.2.5</maven.surefire.version>  
-        <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
-        
-        <!-- AÑADIDO SESIÓN 07: Versiones de nuevos plugins -->
-        <jacoco.version>0.8.12</jacoco.version>
-        <checkstyle.version>3.6.0</checkstyle.version>
-        <pmd.version>7.4.0</pmd.version>
-        <spotbugs.version>4.8.6.0</spotbugs.version>
-        <owasp.version>8.2.1</owasp.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>  <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
     </properties>
 
     <build>
@@ -28,21 +19,15 @@
                     <release>21</release>
                 </configuration>
             </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
                 <configuration>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <!-- AÑADIDO SESIÓN 07: Para que Jacoco funcione correctamente -->
-                    <argLine>@{argLine} -Dfile.encoding=UTF-8</argLine>
+                    <useSystemClassLoader>false</useSystemClassLoader>  <includes>
+                        <include>**/*Test.java</include>  </includes>
                 </configuration>
             </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -63,126 +48,69 @@
                     </execution>
                 </executions>
             </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.1</version>
             </plugin>
-            
-            <!-- ========== AÑADIDO SESIÓN 07: PLUGIN JACOCO (COBERTURA) ========== -->
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <!-- Verificación de cobertura mínima 90% -->
-                    <execution>
-                        <id>jacoco-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>PACKAGE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.90</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <!-- ========== AÑADIDO SESIÓN 07: PLUGIN CHECKSTYLE (ESTILO) ========== -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.version}</version>
-                <configuration>
-                    <configLocation>google_checks.xml</configLocation>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>false</failsOnError>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <!-- ========== AÑADIDO SESIÓN 07: PLUGIN PMD ========== -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmd.version}</version>
-                <configuration>
-                    <linkXRef>true</linkXRef>
-                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-                    <minimumTokens>100</minimumTokens>
-                    <targetJdk>21</targetJdk>
-                    <rulesets>
-                        <ruleset>/rulesets/java/quickstart.xml</ruleset>
-                    </rulesets>
-                    <failOnViolation>false</failOnViolation>  <!-- No falla el build -->
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmd.version}</version>
-                <configuration>
-                    <failOnViolation>false</failOnViolation>
-                </configuration>
-            </plugin>
-            
-            
-            <!-- ========== AÑADIDO SESIÓN 07: PLUGIN SPOTBUGS ========== -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <failOnError>false</failOnError>
-                    <includeTests>true</includeTests>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.12</version>
+              <executions>
+                <execution>
+                  <id>prepare-agent</id>
+                  <goals><goal>prepare-agent</goal></goals>
+                </execution>
+            <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <goals><goal>report</goal></goals>
+            </execution>
+        <!-- Verificar cobertura mínima 90% -->
+            <execution>
+              <id>jacoco-check</id>
+              <goals><goal>check</goal></goals>
+              <configuration>
+                <rules>
+                  <rule>
+                    <element>PACKAGE</element>
+                    <limits>
+                      <limit>
+                        <counter>LINE</counter>
+                        <value>COVEREDRATIO</value>
+                        <minimum>0.9</minimum>
+                      </limit>
+                    </limits>
+                  </rule>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+    
+        <!-- Surefire para tests -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+    
+        <!-- Checkstyle para estilo de código -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.6.0</version>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals><goal>check</goal></goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
         </plugins>
-        
         <resources>
             <resource>
                 <directory>src/main/java/</directory>
@@ -202,56 +130,6 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.6.0</version>
             </plugin>
-            
-            <!-- ========== AÑADIDO SESIÓN 07: REPORTES ADICIONALES ========== -->
-            
-            <!-- Reporte Checkstyle -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.version}</version>
-                <configuration>
-                    <configLocation>sun_checks.xml</configLocation>  <!-- Cambiado -->
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>false</failsOnError>  <!-- No falla el build -->
-                </configuration>
-            </plugin>
-            
-            <!-- Reporte PMD -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmd.version}</version>
-            </plugin>
-            
-            <!-- Reporte Spotbugs -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version>
-            </plugin>
-            
-            <!-- Reporte JaCoCo -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-            </plugin>
-            
-            <!-- ========== AÑADIDO SESIÓN 07: OWASP DEPENDENCY CHECK ========== -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${owasp.version}</version>
-                <configuration>
-                    <skipTestScope>false</skipTestScope>
-                    failBuildOnCVSS>11</failBuildOnCVSS>
-                    <formats>
-                        <format>HTML</format>
-                    </formats>
-                </configuration>
-            </plugin>
-            
         </plugins>
     </reporting>
 
@@ -263,14 +141,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.20</version>
-        </dependency>
+   			 <groupId>com.google.code.gson</groupId>
+ 		     <artifactId>gson</artifactId>
+    		 <version>2.10.1</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.thoughtworks.xstream</groupId>
+  			<artifactId>xstream</artifactId>
+    		<version>1.4.20</version>
+		</dependency>
     </dependencies>
 </project>
+
