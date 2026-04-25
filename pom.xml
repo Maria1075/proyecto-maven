@@ -73,7 +73,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.1</version>
             </plugin>
-<<<<<<< HEAD
+
             
             <!-- ========== AÑADIDO SESIÓN 07: JACOCO (COBERTURA) ========== -->
             <plugin>
@@ -178,8 +178,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
-=======
             <plugin>
               <groupId>org.jacoco</groupId>
               <artifactId>jacoco-maven-plugin</artifactId>
@@ -237,7 +235,6 @@
         </plugin>
       </plugins>
     </build>
->>>>>>> 5299d5a2f85e8464abd8d88c2095d170dd858115
         </plugins>
         
         <resources>
@@ -351,9 +348,5 @@
             <version>1.4.20</version>
         </dependency>
     </dependencies>
-<<<<<<< HEAD
 </project>
-=======
 </project>
-
->>>>>>> 5299d5a2f85e8464abd8d88c2095d170dd858115
