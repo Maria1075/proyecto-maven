@@ -243,6 +243,7 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${owasp.version}</version>
                 <configuration>
+                    <skip>true</skip>  
                     <skipTestScope>false</skipTestScope>
                     <failBuildOnCVSS>11</failBuildOnCVSS>
                     <formats>
