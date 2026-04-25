@@ -1,17 +1,165 @@
-name: Maven Build
-on: [push]
+name: Maven CI/CD - Sesión 07
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      # 1. Checkout del código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # 2. Configurar Java 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-      - run: mvn clean package
+      
+      # 3. Cache de dependencias Maven (acelera builds)
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      
+      # 4. Compilar el proyecto
+      - name: Compile with Maven
+        run: mvn clean compile
+      
+      # 5. Ejecutar tests con cobertura JaCoCo
+      - name: Run Tests with JaCoCo Coverage
+        run: mvn test jacoco:report
+      
+      # 6. Publicar reporte de tests JUnit
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
         if: always()
         with:
           report_paths: '**/target/surefire-reports/TEST-*.xml'
+          detailed_summary: true
+          include_passed: true
+      
+      # 7. Publicar reporte de cobertura JaCoCo
+      - name: Publish JaCoCo Coverage Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jacoco-coverage-report
+          path: target/site/jacoco/
+          retention-days: 30
+      
+      # 8. Ejecutar Checkstyle (estilo de código)
+      - name: Run Checkstyle
+        run: mvn checkstyle:checkstyle || true  # No falla el build
+      
+      # 9. Publicar reporte Checkstyle
+      - name: Publish Checkstyle Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checkstyle-report
+          path: target/site/checkstyle.html
+      
+      # 10. Ejecutar PMD (análisis estático)
+      - name: Run PMD
+        run: mvn pmd:pmd || true
+      
+      # 11. Publicar reporte PMD
+      - name: Publish PMD Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pmd-report
+          path: target/site/pmd.html
+      
+      # 12. Ejecutar Spotbugs (búsqueda de bugs)
+      - name: Run Spotbugs
+        run: mvn spotbugs:spotbugs || true
+      
+      # 13. Publicar reporte Spotbugs
+      - name: Publish Spotbugs Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spotbugs-report
+          path: target/site/spotbugs.html
+      
+      # 14. Ejecutar OWASP Dependency Check (seguridad)
+      # NOTA: Puede fallar por rate limiting de NVD
+      - name: Run OWASP Dependency Check
+        run: mvn dependency-check:check -DfailOnError=false || true
+      
+      # 15. Publicar reporte OWASP
+      - name: Publish OWASP Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: owasp-security-report
+          path: target/dependency-check-report.html
+      
+      # 16. Generar JavaDoc
+      - name: Generate Javadoc
+        run: mvn javadoc:javadoc || true
+      
+      # 17. Publicar JavaDoc
+      - name: Publish Javadoc
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: javadoc-api
+          path: target/site/apidocs/
+      
+      # 18. Generar sitio completo con todos los reportes
+      - name: Generate Maven Site
+        run: mvn site -Ddependency-check.skip=true || true
+      
+      # 19. Publicar sitio Maven completo
+      - name: Publish Maven Site
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: maven-site
+          path: target/site/
+      
+      # 20. Empaquetar JAR
+      - name: Package JAR
+        run: mvn package -DskipTests
+      
+      # 21. Subir JAR como artifact
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-jar
+          path: target/*.jar
+      
+      # 22. Verificar cobertura (opcional, puede fallar)
+      - name: Verify Coverage Threshold
+        run: mvn jacoco:check || true
+        continue-on-error: true
+
+  # Job opcional: Desplegar a GitHub Pages (solo en main)
+  deploy-docs:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download Maven Site
+        uses: actions/download-artifact@v4
+        with:
+          name: maven-site
+          path: site
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          destination_dir: ./docs
