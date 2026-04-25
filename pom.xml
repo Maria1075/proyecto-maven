@@ -14,7 +14,7 @@
         <!-- AÑADIDO SESIÓN 07 -->
         <jacoco.version>0.8.12</jacoco.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <pmd.version>7.4.0</pmd.version>
+        <pmd.version>3.21.0</pmd.version>        <!-- Versión CORRECTA -->
         <spotbugs.version>4.8.6.0</spotbugs.version>
         <owasp.version>8.2.1</owasp.version>
     </properties>
