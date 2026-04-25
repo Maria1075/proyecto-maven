@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reserva.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.residencias</a> &gt; <span class="el_source">Reserva.java</span></div><h1>Reserva.java</h1><pre class="source lang-java linenums">/**
+ * Clase que representa una reserva en una residencia.
+ * Incluye información sobre el residente, la habitación, y las fechas de inicio y fin.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion09.residencias;
+
+import java.util.Date;
+import java.io.Serializable;
+
+public class Reserva implements Serializable {
+
+	private int numeroReserva;
+	private Residente residente;
+	private Habitacion habitacion;
+	private Date fechaInicio;
+	private Date fechaFin;
+<span class="fc" id="L21">	private static int ultimoN = 0;</span>
+
+	/**
+	 * Constructor de la clase Reserva. Asigna un número de reserva incremental.
+	 *
+	 * @param residente    Residente que hace la reserva.
+	 * @param habitacion   Habitación reservada.
+	 * @param fechaInicio  Fecha de inicio de la reserva.
+	 * @param fechaFin     Fecha de fin de la reserva.
+	 */
+<span class="fc" id="L31">	public Reserva(Residente residente, Habitacion habitacion, Date fechaInicio, Date fechaFin) {</span>
+<span class="fc" id="L32">		this.numeroReserva = ++ultimoN;</span>
+<span class="fc" id="L33">		this.residente = residente;</span>
+<span class="fc" id="L34">		this.habitacion = habitacion;</span>
+<span class="fc" id="L35">		this.fechaInicio = fechaInicio;</span>
+<span class="fc" id="L36">		this.fechaFin = fechaFin;</span>
+<span class="fc" id="L37">	}</span>
+
+	/**
+	 * @return Número de la reserva.
+	 */
+	public int getNumeroReserva() {
+<span class="fc" id="L43">		return numeroReserva;</span>
+	}
+
+	/**
+	 * Establece manualmente el número de la reserva.
+	 *
+	 * @param numeroReserva Número de reserva a asignar.
+	 */
+	public void setNumeroReserva(int numeroReserva) {
+<span class="nc" id="L52">		this.numeroReserva = numeroReserva;</span>
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * @return Residente asociado a la reserva.
+	 */
+	public Residente getResidente() {
+<span class="fc" id="L59">		return residente;</span>
+	}
+
+	/**
+	 * Asigna un nuevo residente a la reserva.
+	 *
+	 * @param residente Residente que se quiere asociar.
+	 */
+	public void setResidente(Residente residente) {
+<span class="nc" id="L68">		this.residente = residente;</span>
+<span class="nc" id="L69">	}</span>
+
+	/**
+	 * @return Habitación reservada.
+	 */
+	public Habitacion getHabitacion() {
+<span class="fc" id="L75">		return habitacion;</span>
+	}
+
+	/**
+	 * Establece una nueva habitación para la reserva.
+	 *
+	 * @param habitacion Nueva habitación a asociar.
+	 */
+	public void setHabitacion(Habitacion habitacion) {
+<span class="nc" id="L84">		this.habitacion = habitacion;</span>
+<span class="nc" id="L85">	}</span>
+
+	/**
+	 * @return Fecha de inicio de la reserva.
+	 */
+	public Date getFechaInicio() {
+<span class="fc" id="L91">		return fechaInicio;</span>
+	}
+
+	/**
+	 * Establece la fecha de inicio de la reserva.
+	 *
+	 * @param fechaInicio Fecha de inicio.
+	 */
+	public void setFechaInicio(Date fechaInicio) {
+<span class="nc" id="L100">		this.fechaInicio = fechaInicio;</span>
+<span class="nc" id="L101">	}</span>
+
+	/**
+	 * @return Fecha de fin de la reserva.
+	 */
+	public Date getFechaFin() {
+<span class="fc" id="L107">		return fechaFin;</span>
+	}
+
+	/**
+	 * Establece la fecha de fin de la reserva.
+	 *
+	 * @param fechaFin Fecha de finalización.
+	 */
+	public void setFechaFin(Date fechaFin) {
+<span class="fc" id="L116">		this.fechaFin = fechaFin;</span>
+<span class="fc" id="L117">	}</span>
+
+	/**
+	 * @return Último número de reserva asignado.
+	 */
+	public static int getUltimoNumero() {
+<span class="fc" id="L123">		return ultimoN;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

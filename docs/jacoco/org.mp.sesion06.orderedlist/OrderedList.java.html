@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderedList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion06.orderedlist</a> &gt; <span class="el_source">OrderedList.java</span></div><h1>OrderedList.java</h1><pre class="source lang-java linenums">/**
+ * Clase que implementa una lista ordenada usando una lista enlazada.
+ * Los elementos se insertan en orden creciente de acuerdo con su comparación natural.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion06.orderedlist;
+
+import org.mp.sesion04.list.linkedlist.LinkedList;
+
+public class OrderedList&lt;T extends Comparable&lt;T&gt;&gt; {
+
+	private LinkedList&lt;T&gt; list; // Lista enlazada subyacente
+
+	/**
+	 * Constructor que inicializa una lista vacía.
+	 */
+<span class="fc" id="L20">	public OrderedList() {</span>
+<span class="fc" id="L21">		this.list = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L22">	}</span>
+
+	/**
+	 * Agrega un elemento manteniendo el orden creciente.
+	 *
+	 * @param element Elemento a insertar
+	 */
+	public void addElement(T element) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		for (int i = 0; i &lt; getSize(); i++) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">			if (element.compareTo(getElement(i)) &lt; 0) {</span>
+<span class="fc" id="L32">				this.list.add(i, element); // Inserta antes del primer elemento mayor</span>
+<span class="fc" id="L33">				return;</span>
+			}
+		}
+<span class="fc" id="L36">		this.list.add(element); // Si no hay mayor, lo agrega al final</span>
+<span class="fc" id="L37">	}</span>
+
+	/**
+	 * Elimina un elemento si está presente en la lista.
+	 *
+	 * @param element Elemento a eliminar
+	 * @return true si fue eliminado, false si no estaba en la lista
+	 */
+	public boolean removeElement(T element) {
+<span class="fc" id="L46">		int pos = getIndex(element);</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (pos == -1) return false;</span>
+<span class="fc" id="L48">		this.list.remove(pos);</span>
+<span class="fc" id="L49">		return true;</span>
+	}
+
+	/**
+	 * Devuelve el elemento en la posición especificada.
+	 *
+	 * @param index Índice del elemento
+	 * @return Elemento en la posición dada
+	 */
+	public T getElement(int index) {
+<span class="fc" id="L59">		return this.list.get(index);</span>
+	}
+
+	/**
+	 * Devuelve el índice del elemento buscado.
+	 *
+	 * @param element Elemento a buscar
+	 * @return Índice del elemento o -1 si no se encuentra
+	 */
+	public int getIndex(T element) {
+<span class="fc" id="L69">		return this.list.indexOf(element);</span>
+	}
+
+	/**
+	 * Devuelve el tamaño actual de la lista.
+	 *
+	 * @return Número de elementos en la lista
+	 */
+	public int getSize() {
+<span class="fc" id="L78">		return this.list.size();</span>
+	}
+
+	/**
+	 * Verifica si la lista está vacía.
+	 *
+	 * @return true si no hay elementos, false en caso contrario
+	 */
+	public boolean isEmpty() {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		return this.list.size() == 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

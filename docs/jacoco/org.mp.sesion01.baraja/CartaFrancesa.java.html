@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartaFrancesa.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion01.baraja</a> &gt; <span class="el_source">CartaFrancesa.java</span></div><h1>CartaFrancesa.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @sinse 2025
+ */
+package org.mp.sesion01.baraja;
+
+/**
+ * The Class CartaFrancesa.
+ */
+public class CartaFrancesa extends Carta{
+
+	/** The palos validos. */
+<span class="fc" id="L13">	private final String[] PALOS_VALIDOS = {&quot;Tréboles&quot;, &quot;Diamantes&quot;, &quot;Corazones&quot;, &quot;Picas&quot;};</span>
+	
+	/**
+	 * Instantiates a new carta francesa.
+	 *
+	 * @param numero the numero
+	 * @param palo the palo
+	 */
+	public CartaFrancesa(int numero, String palo) {
+<span class="fc" id="L22">		super(numero, palo);</span>
+<span class="fc" id="L23">		validarNumero(numero);</span>
+<span class="fc" id="L24">		validarPalo(palo);</span>
+<span class="fc" id="L25">	}</span>
+
+	/**
+	 * Validar palo.
+	 *
+	 * @param palo the palo
+	 */
+	private void validarPalo(String palo) {
+<span class="fc" id="L33">		boolean correcto = false;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (int i = 0; i &lt; PALOS_VALIDOS.length; i++) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">			if(PALOS_VALIDOS[i].equals(palo)) {</span>
+<span class="fc" id="L36">				correcto = true;</span>
+<span class="fc" id="L37">				break;</span>
+			}
+		}
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if(!correcto) {</span>
+<span class="fc" id="L41">			throw new IllegalArgumentException(&quot;Palo inválido para la baraja francesa: &quot;+palo);</span>
+		}
+		
+<span class="fc" id="L44">	}</span>
+
+	/**
+	 * Validar numero.
+	 *
+	 * @param numero the numero
+	 */
+	private void validarNumero(int numero) {
+<span class="fc bfc" id="L52" title="All 4 branches covered.">		if(numero &lt; 1 || numero &gt; 13) {</span>
+<span class="fc" id="L53">			throw new IllegalArgumentException(&quot;Número inválido para la baraja francesa: &quot;+numero);</span>
+		}
+<span class="fc" id="L55">	}</span>
+
+	/**
+	 * Compare to.
+	 *
+	 * @param otra the otra
+	 * @return the int
+	 */
+	@Override
+	public int compareTo(Carta otra) {
+<span class="fc" id="L65">		int mivalor = this.numero;</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">		switch (this.palo) {</span>
+<span class="fc" id="L67">		case &quot;Picas&quot;: mivalor += 13;</span>
+<span class="fc" id="L68">		case &quot;Corazones&quot; : mivalor += 13;</span>
+<span class="fc" id="L69">		case &quot;Diamantes&quot;: mivalor += 13;</span>
+		}
+<span class="fc" id="L71">		int otravalor = otra.numero;</span>
+<span class="fc bfc" id="L72" title="All 4 branches covered.">		switch (otra.palo) {</span>
+<span class="fc" id="L73">		case &quot;Picas&quot;: otravalor += 13;</span>
+<span class="fc" id="L74">		case &quot;Corazones&quot; : otravalor += 13;</span>
+<span class="fc" id="L75">		case &quot;Diamantes&quot;: otravalor += 13;</span>
+		}
+<span class="fc" id="L77">		return Integer.compare(mivalor, otravalor); // -1, 0, 1</span>
+	}
+
+	/**
+	 * Gets the nombre.
+	 *
+	 * @return the nombre
+	 */
+	@Override
+	public String getNombre() {
+<span class="fc" id="L87">		return this.numero+&quot;&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

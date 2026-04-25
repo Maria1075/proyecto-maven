@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Factorial.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.basicos</a> &gt; <span class="el_source">Factorial.java</span></div><h1>Factorial.java</h1><pre class="source lang-java linenums">/**
+ * Clase que implementa el cálculo del factorial de un número,
+ * tanto de forma recursiva como iterativa.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.basicos;
+
+<span class="nc" id="L11">public class Factorial {</span>
+
+	/**
+	 * Calcula el factorial de un número de forma recursiva.
+	 *
+	 * @param n Número entero no negativo
+	 * @return El factorial de n (n!)
+	 */
+	public static Integer factorialRec(int n) {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">		if (n &lt;= 1) return 1; // Caso base</span>
+<span class="nc" id="L21">		return n * factorialRec(n - 1); // Llamada recursiva</span>
+	}
+
+	/**
+	 * Calcula el factorial de un número de forma iterativa.
+	 *
+	 * @param n Número entero no negativo
+	 * @return El factorial de n (n!)
+	 */
+	public static Integer factorialIter(int n) {
+<span class="nc" id="L31">		int producto = 1;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		for (int i = 2; i &lt;= n; i++) {</span>
+<span class="nc" id="L33">			producto *= i;</span>
+		}
+<span class="nc" id="L35">		return producto;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

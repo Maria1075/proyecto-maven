@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayStack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion05.pilas</a> &gt; <span class="el_source">ArrayStack.java</span></div><h1>ArrayStack.java</h1><pre class="source lang-java linenums">package org.mp.sesion05.pilas;
+/**
+ * {@code ArrayStack&lt;E&gt;} es una implementación de la interfaz {@link Stack} que utiliza
+ * un array dinámico para almacenar los elementos de la pila. Permite las operaciones
+ * push (añadir en la cima), pop (remover de la cima), peek (ver la cima) y getSize
+ * (obtener el tamaño) con un posible redimensionamiento del array para acomodar
+ * un número creciente de elementos.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta pila.
+ */
+public class ArrayStack&lt;E&gt; implements Stack&lt;E&gt;{
+	
+	private static final int CAPACITY = 16;
+	private Object[] array;
+	private int size;
+	/**
+	 * Constructor: Inicializa una nueva pila vacía con la capacidad inicial predeterminada (16 elementos).
+	 * El tamaño de la pila se establece en 0.
+	 */
+<span class="fc" id="L20">	public ArrayStack() { //[1, 2, 3]</span>
+<span class="fc" id="L21">		this.array = new Object[CAPACITY];</span>
+<span class="fc" id="L22">		this.size = 0;</span>
+<span class="fc" id="L23">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el número de elementos que contiene la pila.
+	 *
+	 * @return El número de elementos en la pila.
+	 */
+	public int getSize() {
+<span class="fc" id="L32">		return this.size;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el elemento que se encuentra en la cima de la pila sin eliminarlo.
+	 * Si la pila está vacía, devuelve {@code null}.
+	 *
+	 * @return El elemento en la cima de la pila, o {@code null} si la pila está vacía.
+	 */
+	public E peek() {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(size == 0) return null;</span>
+<span class="fc" id="L44">		return (E) array[size-1];</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Añade un elemento a la cima de la pila (operación push).
+	 * Primero, verifica y expande la capacidad del array si es necesario.
+	 * Luego, añade el elemento en la siguiente posición disponible en la cima
+	 * (al final del bloque utilizado del array) e incrementa el tamaño de la pila.
+	 *
+	 * @param o El elemento que se va a añadir a la cima de la pila.
+	 */
+	public void push(E o) {
+<span class="fc" id="L57">		expandCapacity();</span>
+<span class="fc" id="L58">		array[size] = o;</span>
+<span class="fc" id="L59">		size++;</span>
+<span class="fc" id="L60">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina y devuelve el elemento que se encuentra en la cima de la pila (operación pop).
+	 * Si la pila está vacía, devuelve {@code null}.
+	 * De lo contrario, obtiene el elemento de la cima, decrementa el tamaño de la pila
+	 * y devuelve el elemento extraído.
+	 *
+	 * @return El elemento que estaba en la cima de la pila, o {@code null} si la pila está vacía.
+	 */
+	public E pop() {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if(isEmpty()) return null;</span>
+<span class="fc" id="L73">		E aux = (E) array[size-1];</span>
+<span class="fc" id="L74">		size--;</span>
+<span class="fc" id="L75">		return aux;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve {@code true} si la pila no contiene ningún elemento.
+	 *
+	 * @return {@code true} si el tamaño de la pila es 0, {@code false} en caso contrario.
+	 */
+	public boolean isEmpty() {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		return this.size == 0;</span>
+	}
+	/**
+	 * Expande la capacidad del array interno si es necesario.
+	 * Si el array está lleno (el tamaño es igual a la capacidad), crea un nuevo array
+	 * con una capacidad mayor (doble del tamaño actual más 1), copia los elementos
+	 * del array antiguo al nuevo y actualiza la referencia del array interno.
+	 */
+	private void expandCapacity() {
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if(size == array.length) {</span>
+<span class="nc" id="L95">			Object[] aux = new Object[2*size + 1];</span>
+<span class="nc" id="L96">			System.arraycopy(array, 0, aux, 0, size);</span>
+<span class="nc" id="L97">			array = aux;</span>
+		}
+<span class="fc" id="L99">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

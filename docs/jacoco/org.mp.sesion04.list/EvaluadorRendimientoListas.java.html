@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EvaluadorRendimientoListas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion04.list</a> &gt; <span class="el_source">EvaluadorRendimientoListas.java</span></div><h1>EvaluadorRendimientoListas.java</h1><pre class="source lang-java linenums">package org.mp.sesion04.list;
+
+import java.util.Random;
+
+import org.mp.sesion04.list.arraylist.ArrayList;
+import org.mp.sesion04.list.linkedlist.LinkedList;
+import org.mp.sesion04.list.List;
+/**
+ * {@code EvaluadorRendimientoListas}: Evalúa el rendimiento de las implementaciones
+ * {@link ArrayList} y {@link LinkedList} de la interfaz {@link List} para diversas
+ * operaciones, midiendo el tiempo promedio de ejecución.
+ */
+<span class="nc" id="L13">public class EvaluadorRendimientoListas {</span>
+<span class="nc" id="L14">    private static final int[] TAMANIOS_LISTA = {10000, 20000, 40000};</span>
+    private static final int NUMERO_OPERACIONES = 100;
+    /**
+     * Método principal que inicia la evaluación de rendimiento de las listas.
+     * @param args Argumentos de la línea de comandos (no utilizados).
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L21">        evaluarRendimiento();</span>
+<span class="nc" id="L22">    }</span>
+    /**
+     * Realiza la evaluación de rendimiento para {@link ArrayList} y {@link LinkedList}
+     * para diferentes tamaños de lista y varias operaciones. Imprime los resultados
+     * del tiempo promedio de ejecución para cada operación y tamaño de lista.
+     */
+    private static void evaluarRendimiento() {
+<span class="nc" id="L29">        System.out.println(&quot;Evaluación de Rendimiento de ArrayList y LinkedList&quot;);</span>
+<span class="nc" id="L30">        System.out.println(&quot;org.mp.sesion04.list.arraylist.ArrayList&quot;);</span>
+<span class="nc" id="L31">        System.out.println(&quot;org.mp.sesion04.list.arraylist.LinkedList&quot;);       </span>
+<span class="nc" id="L32">        System.out.println(&quot;===================================================&quot;);</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        for (int tamanio : TAMANIOS_LISTA) {</span>
+<span class="nc" id="L35">            System.out.println(&quot;\nTamaño de la lista: &quot; + tamanio);</span>
+<span class="nc" id="L36">            System.out.println(&quot;Operación\t\tArrayList (ns)\tLinkedList (ns)&quot;);</span>
+
+<span class="nc" id="L38">            double[] tiemposPromedioArrayList = new double[6];</span>
+<span class="nc" id="L39">            double[] tiemposPromedioLinkedList = new double[6];</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            for (int i = 0; i &lt; NUMERO_OPERACIONES; i++) {</span>
+<span class="nc" id="L42">                long[] tiemposArrayList = realizarOperaciones(new ArrayList&lt;&gt;(), tamanio);</span>
+<span class="nc" id="L43">                long[] tiemposLinkedList = realizarOperaciones(new LinkedList&lt;&gt;(), tamanio);</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                for (int j = 0; j &lt; tiemposArrayList.length; j++) {</span>
+<span class="nc" id="L46">                    tiemposPromedioArrayList[j] += tiemposArrayList[j];</span>
+<span class="nc" id="L47">                    tiemposPromedioLinkedList[j] += tiemposLinkedList[j];</span>
+                }
+            }
+
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            for (int j = 0; j &lt; tiemposPromedioArrayList.length; j++) {</span>
+<span class="nc" id="L52">                tiemposPromedioArrayList[j] /= NUMERO_OPERACIONES;</span>
+<span class="nc" id="L53">                tiemposPromedioLinkedList[j] /= NUMERO_OPERACIONES;</span>
+<span class="nc" id="L54">                imprimirResultados(getNombreOperacion(j), tiemposPromedioArrayList[j], tiemposPromedioLinkedList[j]);</span>
+            }
+        }
+<span class="nc" id="L57">    }</span>
+    /**
+     * Devuelve el nombre legible de una operación basándose en su índice.
+     * @param indice El índice de la operación.
+     * @return El nombre de la operación.
+     */
+    private static String getNombreOperacion(int indice) {
+<span class="nc bnc" id="L64" title="All 7 branches missed.">        switch (indice) {</span>
+            case 0:
+<span class="nc" id="L66">                return &quot;Agregar al principio&quot;;</span>
+            case 1:
+<span class="nc" id="L68">                return &quot;Agregar al final&quot;;</span>
+            case 2:
+<span class="nc" id="L70">                return &quot;Acceder aleatorio&quot;;</span>
+            case 3:
+<span class="nc" id="L72">                return &quot;Eliminar del principio&quot;;</span>
+            case 4:
+<span class="nc" id="L74">                return &quot;Eliminar del final&quot;;</span>
+            case 5:
+<span class="nc" id="L76">                return &quot;Eliminar aleatorio&quot;;</span>
+            default:
+<span class="nc" id="L78">                return &quot;&quot;;</span>
+        }
+    }
+    /**
+     * Realiza una serie de operaciones (agregar al principio, al final, acceder aleatorio,
+     * eliminar del principio, del final y aleatorio) en una lista dada y mide el tiempo
+     * total de ejecución para cada tipo de operación.
+     *
+     * @param lista La lista en la que se realizarán las operaciones.
+     * @param tamanio El tamaño inicial con el que se llenará la lista.
+     * @return Un array de longs donde cada elemento representa el tiempo total (en nanosegundos)
+     * para un tipo de operación específica.
+     */
+    private static long[] realizarOperaciones(List&lt;Integer&gt; lista, int tamanio) {
+<span class="nc" id="L92">        long[] tiempos = new long[6];</span>
+<span class="nc" id="L93">        Random random = new Random();</span>
+
+        // Llenar la lista con valores aleatorios
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (int i = 0; i &lt; tamanio; i++) {</span>
+<span class="nc" id="L97">            lista.add(random.nextInt());</span>
+        }
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (int i = 0; i &lt; NUMERO_OPERACIONES; i++) {</span>
+<span class="nc" id="L101">            tiempos[0] += agregarAlPrincipio(lista);</span>
+<span class="nc" id="L102">            tiempos[1] += agregarAlFinal(lista);</span>
+<span class="nc" id="L103">            tiempos[2] += accederAleatorio(lista, random);</span>
+<span class="nc" id="L104">            tiempos[3] += eliminarDelPrincipio(lista);</span>
+<span class="nc" id="L105">            tiempos[4] += eliminarDelFinal(lista);</span>
+<span class="nc" id="L106">            tiempos[5] += eliminarAleatorio(lista, random);</span>
+        }
+
+<span class="nc" id="L109">        return tiempos;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en agregar un elemento al principio de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long agregarAlPrincipio(List&lt;Integer&gt; lista) {
+<span class="nc" id="L117">        long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L118">        lista.add(0, 0);</span>
+<span class="nc" id="L119">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en agregar un elemento al final de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long agregarAlFinal(List&lt;Integer&gt; lista) {
+<span class="nc" id="L127">    	long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L128">        lista.add(lista.size(), 0);</span>
+<span class="nc" id="L129">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en acceder a un elemento en una posición aleatoria de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @param random Generador de números aleatorios para seleccionar la posición.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long accederAleatorio(List&lt;Integer&gt; lista, Random random) {
+<span class="nc" id="L138">    	int pos = random.nextInt(0, lista.size());</span>
+<span class="nc" id="L139">    	long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L140">        lista.get(pos);</span>
+<span class="nc" id="L141">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en eliminar el primer elemento de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long eliminarDelPrincipio(List&lt;Integer&gt; lista) {
+<span class="nc" id="L149">    	long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L150">        lista.remove(0);</span>
+<span class="nc" id="L151">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en eliminar el último elemento de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long eliminarDelFinal(List&lt;Integer&gt; lista) {
+<span class="nc" id="L159">    	long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L160">        lista.remove(lista.size()-1);</span>
+<span class="nc" id="L161">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Mide el tiempo que tarda en eliminar un elemento en una posición aleatoria de la lista.
+     * @param lista La lista en la que se realizará la operación.
+     * @param random Generador de números aleatorios para seleccionar la posición.
+     * @return El tiempo transcurrido en nanosegundos.
+     */
+    private static long eliminarAleatorio(List&lt;Integer&gt; lista, Random random) {
+<span class="nc" id="L170">    	int pos = random.nextInt(0, lista.size());</span>
+<span class="nc" id="L171">    	long tiempoInicio = System.nanoTime();</span>
+<span class="nc" id="L172">        lista.remove(pos);</span>
+<span class="nc" id="L173">        return System.nanoTime() - tiempoInicio;</span>
+    }
+    /**
+     * Imprime los resultados de rendimiento para una operación específica, mostrando
+     * el tiempo promedio de ejecución para {@link ArrayList} y {@link LinkedList}.
+     *
+     * @param operacion El nombre de la operación evaluada.
+     * @param tiempoPromedioArrayList El tiempo promedio de ejecución para {@link ArrayList} (en nanosegundos).
+     * @param tiempoPromedioLinkedList El tiempo promedio de ejecución para {@link LinkedList} (en nanosegundos).
+     */
+    private static void imprimirResultados(String operacion, double tiempoPromedioArrayList, double tiempoPromedioLinkedList) {
+<span class="nc" id="L184">        System.out.printf(&quot;%-22s\t%,15.0f\t%,15.0f%n&quot;, operacion, tiempoPromedioArrayList, tiempoPromedioLinkedList);</span>
+<span class="nc" id="L185">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

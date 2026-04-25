@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Baraja.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion01.baraja</a> &gt; <span class="el_source">Baraja.java</span></div><h1>Baraja.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @sinse 2025
+ */
+package org.mp.sesion01.baraja;
+
+/**
+ * The Class Baraja.
+ */
+public abstract class Baraja {
+	
+	/** The cartas. */
+	public Carta[] cartas;
+	
+	/** The indice. */
+	protected int indice;
+	
+	/**
+	 * Instantiates a new baraja.
+	 */
+<span class="fc" id="L21">	public Baraja() {</span>
+<span class="fc" id="L22">		crearBaraja();</span>
+<span class="fc" id="L23">		this.indice = 0;</span>
+<span class="fc" id="L24">	}</span>
+	
+	/**
+	 * Crear baraja.
+	 */
+	public abstract void crearBaraja();
+	
+	/**
+	 * Barajar.
+	 */
+	public void barajar() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		for (int i = 0; i &lt; cartas.length * 20; i++) {</span>
+<span class="fc" id="L36">			int a = (int) (Math.random() * cartas.length);</span>
+<span class="fc" id="L37">			int b = (int) (Math.random() * cartas.length);</span>
+<span class="fc" id="L38">			Carta aux = cartas[a];</span>
+<span class="fc" id="L39">			cartas[a] = cartas[b];</span>
+<span class="fc" id="L40">			cartas[b] = aux;</span>
+		}
+<span class="fc" id="L42">		this.indice = 0;</span>
+<span class="fc" id="L43">	}</span>
+	
+	/**
+	 * Ordenar.
+	 */
+	public void ordenar() {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		for (int i = 1; i &lt; cartas.length; i++) {</span>
+<span class="fc" id="L50">			Carta aux = cartas[i];</span>
+			int j;
+<span class="fc bfc" id="L52" title="All 4 branches covered.">			for (j = i-1; j&gt;=0 &amp;&amp; aux.compareTo(cartas[j]) &lt; 0; j--) {</span>
+<span class="fc" id="L53">				cartas[j+1] = cartas[j];</span>
+			}
+<span class="fc" id="L55">			cartas[j+1] = aux;</span>
+		}
+<span class="fc" id="L57">		this.indice = 0;</span>
+<span class="fc" id="L58">	}</span>
+	
+	/**
+	 * Mostrar.
+	 */
+	public void mostrar() {
+<span class="nc" id="L64">		System.out.println(&quot;Baraja de &quot;+cartas.length+&quot; cartas:&quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (int i = 0; i &lt; cartas.length; i++) {</span>
+<span class="nc" id="L66">			System.out.println(&quot;[&quot;+(i+1)+&quot;] &quot;+cartas[i]);</span>
+		}
+<span class="nc" id="L68">	}</span>
+	
+	/**
+	 * Repartir carta.
+	 *
+	 * @return the carta
+	 */
+	public Carta repartirCarta() {
+<span class="nc" id="L76">		Carta c = this.cartas[indice];</span>
+<span class="nc" id="L77">		indice++;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if(indice &gt;= this.cartas.length) {</span>
+<span class="nc" id="L79">			indice = 0;</span>
+		}
+<span class="nc" id="L81">		return c;</span>
+	}
+	
+	/**
+	 * Cortar baraja.
+	 */
+	public void cortarBaraja() {
+<span class="fc" id="L88">		int p = (int)(Math.random()* cartas.length);</span>
+<span class="fc" id="L89">		Carta[] aux = new Carta [cartas.length];</span>
+<span class="fc" id="L90">		int k = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (int i = p+1; i &lt; cartas.length; i++, k++) {</span>
+<span class="fc" id="L92">			aux[k] = cartas[i];</span>
+		}
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (int i = 0; i &lt;= p; i++, k++) {</span>
+<span class="fc" id="L95">			aux[k] = cartas[i];</span>
+		}
+<span class="fc" id="L97">		this.cartas = aux;</span>
+<span class="fc" id="L98">	}</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

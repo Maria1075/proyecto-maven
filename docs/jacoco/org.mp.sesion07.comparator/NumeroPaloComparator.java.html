@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumeroPaloComparator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.comparator</a> &gt; <span class="el_source">NumeroPaloComparator.java</span></div><h1>NumeroPaloComparator.java</h1><pre class="source lang-java linenums">/**
+ * Comparador que ordena cartas primero por número y luego por palo en el orden: O, C, E, B.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.comparator;
+
+import java.util.Comparator;
+
+<span class="fc" id="L12">public class NumeroPaloComparator implements Comparator&lt;Carta&gt; {</span>
+    
+    /**
+     * Compara dos cartas primero por su número, y si son iguales, por el orden del palo.
+     *
+     * @param c1 Primera carta a comparar
+     * @param c2 Segunda carta a comparar
+     * @return un número negativo, cero o positivo según si c1 es menor, igual o mayor que c2
+     */
+    @Override
+    public int compare(Carta c1, Carta c2) {
+        // Primero comparamos por número
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (c1.getNumero() &gt; c2.getNumero()) {</span>
+<span class="fc" id="L25">            return 1;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        } else if (c1.getNumero() &lt; c2.getNumero()) {</span>
+<span class="fc" id="L27">            return -1;</span>
+        } else {
+            // Si los números son iguales, comparamos por palo
+<span class="fc" id="L30">            String[] ordenPalos = {&quot;O&quot;, &quot;C&quot;, &quot;E&quot;, &quot;B&quot;};</span>
+<span class="fc" id="L31">            int indiceC1 = -1;</span>
+<span class="fc" id="L32">            int indiceC2 = -1;</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for (int i = 0; i &lt; ordenPalos.length; i++) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                if (c1.getPalo().equals(ordenPalos[i])) {</span>
+<span class="fc" id="L36">                    indiceC1 = i;</span>
+                }
+<span class="fc bfc" id="L38" title="All 2 branches covered.">                if (c2.getPalo().equals(ordenPalos[i])) {</span>
+<span class="fc" id="L39">                    indiceC2 = i;</span>
+                }
+            }
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            if (indiceC1 &gt; indiceC2) {</span>
+<span class="fc" id="L44">                return 1;</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">            } else if (indiceC1 &lt; indiceC2) {</span>
+<span class="fc" id="L46">                return -1;</span>
+            } else {
+<span class="nc" id="L48">                return -1;</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

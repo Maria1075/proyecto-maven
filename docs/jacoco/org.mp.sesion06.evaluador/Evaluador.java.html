@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Evaluador.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion06.evaluador</a> &gt; <span class="el_source">Evaluador.java</span></div><h1>Evaluador.java</h1><pre class="source lang-java linenums">/**
+ * Clase que permite evaluar expresiones aritméticas simples en notación infija.
+ * Utiliza una pila de enteros y una cola de tokens para el procesamiento.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion06.evaluador;
+
+import org.mp.sesion05.colas.Queue;
+import org.mp.sesion05.pilas.Stack;
+
+public class Evaluador {
+
+	private Stack&lt;Integer&gt; pila; // Pila de operandos
+	private Queue&lt;String&gt; cola;  // Cola que puede contener tokens (no usada directamente en este código)
+
+	/**
+	 * Constructor del evaluador.
+	 *
+	 * @param pila Estructura de pila que se utilizará para los operandos
+	 * @param cola Estructura de cola (no usada en esta implementación)
+	 */
+<span class="fc" id="L25">	public Evaluador(Stack&lt;Integer&gt; pila, Queue&lt;String&gt; cola) {</span>
+<span class="fc" id="L26">		this.pila = pila;</span>
+<span class="fc" id="L27">		this.cola = cola;</span>
+<span class="fc" id="L28">	}</span>
+
+	/**
+	 * Elimina espacios de una expresión y separa operadores de operandos.
+	 *
+	 * @param expresion Cadena con la expresión a evaluar
+	 * @return Arreglo de tokens separados
+	 */
+	public String[] eliminarBlancos(String expresion) {
+<span class="fc" id="L37">		String aux = &quot;&quot;;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		for (int i = 0; i &lt; expresion.length(); i++) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">			if (esOperador(expresion.charAt(i) + &quot;&quot;)) {</span>
+<span class="fc" id="L40">				aux += &quot; &quot;;</span>
+			}
+<span class="fc" id="L42">			aux += expresion.charAt(i);</span>
+		}
+<span class="fc" id="L44">		return aux.split(&quot;[ ]+&quot;); // Divide por uno o más espacios</span>
+	}
+
+	/**
+	 * Procesa una operación aritmética usando dos operandos de la pila.
+	 *
+	 * @param op Operador (+, -, *, /)
+	 * @param operandosPila Pila desde la que se toman los operandos
+	 */
+	public void procesarUnOperador(char op, Stack&lt;Integer&gt; operandosPila) {
+<span class="fc" id="L54">		Integer segundoOperando = operandosPila.pop();</span>
+<span class="fc" id="L55">		Integer primerOperando = operandosPila.pop();</span>
+
+<span class="pc bpc" id="L57" title="1 of 5 branches missed.">		switch (op) {</span>
+			case '+':
+<span class="fc" id="L59">				operandosPila.push(primerOperando + segundoOperando);</span>
+<span class="fc" id="L60">				break;</span>
+			case '-':
+<span class="fc" id="L62">				operandosPila.push(primerOperando - segundoOperando);</span>
+<span class="fc" id="L63">				break;</span>
+			case '*':
+<span class="fc" id="L65">				operandosPila.push(primerOperando * segundoOperando);</span>
+<span class="fc" id="L66">				break;</span>
+			case '/':
+<span class="fc bfc" id="L68" title="All 2 branches covered.">				if (segundoOperando == 0) {</span>
+<span class="fc" id="L69">					throw new RuntimeException(&quot;No es posible una división por cero&quot;);</span>
+				}
+<span class="fc" id="L71">				operandosPila.push(primerOperando / segundoOperando);</span>
+		}
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * Evalúa una expresión aritmética dada en formato infijo simple.
+	 *
+	 * @param expresion La expresión a evaluar
+	 * @return Resultado entero de la evaluación
+	 */
+	public int evaluarExpresion(String expresion) {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (soloDigitos(expresion)) {</span>
+<span class="fc" id="L83">			return Integer.parseInt(expresion.replace(&quot; &quot;, &quot;&quot;));</span>
+		}
+<span class="fc" id="L85">		String[] aux = eliminarBlancos(expresion);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		for (int i = 0; i &lt; aux.length; i++) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">			if (esOperador(aux[i])) {</span>
+<span class="fc" id="L88">				procesarUnOperador(aux[i].charAt(0), pila);</span>
+			} else {
+<span class="fc" id="L90">				pila.push(Integer.parseInt(aux[i]));</span>
+			}
+		}
+<span class="fc" id="L93">		return pila.pop();</span>
+	}
+
+	/**
+	 * Verifica si una expresión contiene solo dígitos y espacios.
+	 *
+	 * @param expresion La expresión a analizar
+	 * @return true si contiene solo números y espacios; false en caso contrario
+	 */
+	private boolean soloDigitos(String expresion) {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int i = 0; i &lt; expresion.length(); i++) {</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">			if (!Character.isDigit(expresion.charAt(i)) &amp;&amp; !Character.isWhitespace(expresion.charAt(i))) {</span>
+<span class="fc" id="L105">				return false;</span>
+			}
+		}
+<span class="fc" id="L108">		return true;</span>
+	}
+
+	/**
+	 * Determina si un token es un operador aritmético válido.
+	 *
+	 * @param token El token a comprobar
+	 * @return true si es uno de los operadores válidos (+, -, *, /)
+	 */
+	private boolean esOperador(String token) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (token.length() != 1) return false;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		switch (token) {</span>
+			case &quot;+&quot;:
+			case &quot;-&quot;:
+			case &quot;*&quot;:
+			case &quot;/&quot;:
+<span class="fc" id="L124">				return true;</span>
+		}
+<span class="fc" id="L126">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

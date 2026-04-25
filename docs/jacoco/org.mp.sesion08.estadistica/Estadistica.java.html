@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Estadistica.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion08.estadistica</a> &gt; <span class="el_source">Estadistica.java</span></div><h1>Estadistica.java</h1><pre class="source lang-java linenums">/**
+ * Clase que permite calcular medidas estadísticas básicas a partir de un conjunto de datos.
+ * 
+ * Autor: Maria Camila Soto Zapata  
+ * Año: 2025
+ */
+
+package org.mp.sesion08.estadistica;
+
+import org.mp.sesion08.conjuntodatos.ConjuntoDatos;
+
+public class Estadistica {
+
+	private ConjuntoDatos cd;
+
+	/**
+	 * Constructor de la clase Estadistica.
+	 * 
+	 * @param cd Conjunto de datos sobre el cual se harán los cálculos estadísticos.
+	 */
+<span class="fc" id="L21">	public Estadistica(ConjuntoDatos cd) {</span>
+<span class="fc" id="L22">		this.cd = cd;</span>
+<span class="fc" id="L23">	}</span>
+
+	/**
+	 * Convierte un arreglo de Strings en un arreglo de doubles.
+	 *
+	 * @param datosString Arreglo de datos numéricos en formato texto
+	 * @return Arreglo equivalente en formato double
+	 */
+	private double[] convertirADouble(String[] datosString) {
+<span class="fc" id="L32">		double[] datosDouble = new double[datosString.length];</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (int i = 0; i &lt; datosDouble.length; i++)</span>
+<span class="fc" id="L35">			datosDouble[i] = Double.parseDouble(datosString[i]);</span>
+
+<span class="fc" id="L37">		return datosDouble;</span>
+	}
+
+	/**
+	 * Calcula la media (promedio) de los valores de una columna numérica.
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor de la media
+	 */
+	public double media(String columna) {
+<span class="fc" id="L47">		String[] datosString = cd.getColumna(columna);</span>
+<span class="fc" id="L48">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="fc" id="L49">		double suma = 0;</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		for (int i = 0; i &lt; datosDouble.length; i++)</span>
+<span class="fc" id="L52">			suma += datosDouble[i];</span>
+
+<span class="fc" id="L54">		double media = suma / datosDouble.length;</span>
+
+<span class="fc" id="L56">		return media;</span>
+	}
+
+	/**
+	 * Calcula el valor máximo en una columna numérica.
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor máximo encontrado
+	 */
+	public double max(String columna) {
+<span class="fc" id="L66">		String[] datosString = cd.getColumna(columna);</span>
+<span class="fc" id="L67">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="fc" id="L68">		double max = Double.MIN_NORMAL;</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (int i = 0; i &lt; datosDouble.length; i++) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (Double.isNaN(datosDouble[i]))</span>
+<span class="fc" id="L72">				continue;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			else if (max &lt; datosDouble[i])</span>
+<span class="fc" id="L74">				max = datosDouble[i];</span>
+		}
+<span class="fc" id="L76">		return max;</span>
+	}
+
+	/**
+	 * Calcula el valor mínimo en una columna numérica.
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor mínimo encontrado
+	 */
+	public double min(String columna) {
+<span class="fc" id="L86">		String[] datosString = cd.getColumna(columna);</span>
+<span class="fc" id="L87">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="fc" id="L88">		double min = datosDouble[0];</span>
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (int i = 0; i &lt; datosDouble.length; i++) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (datosDouble[i] &lt; min)</span>
+<span class="fc" id="L92">				min = datosDouble[i];</span>
+		}
+
+<span class="fc" id="L95">		return min;</span>
+	}
+
+	/**
+	 * Calcula la suma total de una columna numérica.
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Suma de los valores
+	 */
+	public double suma(String columna) {
+<span class="fc" id="L105">		String[] datosString = cd.getColumna(columna);</span>
+<span class="fc" id="L106">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="fc" id="L107">		double suma = 0;</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (int i = 0; i &lt; datosDouble.length; i++)</span>
+<span class="fc" id="L110">			suma += datosDouble[i];</span>
+
+<span class="fc" id="L112">		return suma;</span>
+	}
+
+	/**
+	 * Calcula la mediana de una columna numérica.
+	 * (Actualmente no implementado)
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor de la mediana (0.0 por defecto)
+	 */
+	public double mediana(String columna) {
+<span class="nc" id="L123">		String[] datosString = cd.getColumna(columna);</span>
+<span class="nc" id="L124">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="nc" id="L125">		return 0.0;</span>
+	}
+
+	/**
+	 * Calcula la varianza de una columna numérica.
+	 * (Actualmente no implementado)
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor de la varianza (0.0 por defecto)
+	 */
+	public double varianza(String columna) {
+<span class="nc" id="L136">		String[] datosString = cd.getColumna(columna);</span>
+<span class="nc" id="L137">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="nc" id="L138">		return 0.0;</span>
+	}
+
+	/**
+	 * Calcula la desviación estándar de una columna numérica.
+	 * (Actualmente no implementado)
+	 *
+	 * @param columna Nombre de la columna
+	 * @return Valor de la desviación estándar (0.0 por defecto)
+	 */
+	public double desviacionEstandar(String columna) {
+<span class="nc" id="L149">		String[] datosString = cd.getColumna(columna);</span>
+<span class="nc" id="L150">		double[] datosDouble = convertirADouble(datosString);</span>
+<span class="nc" id="L151">		return 0.0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

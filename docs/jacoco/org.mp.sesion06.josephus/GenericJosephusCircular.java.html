@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenericJosephusCircular.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion06.josephus</a> &gt; <span class="el_source">GenericJosephusCircular.java</span></div><h1>GenericJosephusCircular.java</h1><pre class="source lang-java linenums">/**
+ * Implementación genérica del problema de Josephus usando una lista circular.
+ * Elimina cada k-ésimo elemento hasta que la lista esté vacía.
+ * 
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion06.josephus;
+
+import org.mp.sesion06.circularlist.CircularList;
+
+public class GenericJosephusCircular&lt;T&gt; {
+
+	private int k; // Paso o intervalo para eliminación
+	private int n; // Número inicial de elementos
+	private CircularList&lt;T&gt; elementos; // Lista circular de elementos
+
+	/**
+	 * Constructor de la clase.
+	 *
+	 * @param k Número de pasos antes de eliminar un elemento
+	 * @param n Número de elementos iniciales
+	 * @param elementos Arreglo con los elementos a usar
+	 */
+<span class="fc" id="L26">	public GenericJosephusCircular(int k, int n, T[] elementos) {</span>
+<span class="fc" id="L27">		this.k = k;</span>
+<span class="fc" id="L28">		this.n = n;</span>
+<span class="fc" id="L29">		this.elementos = new CircularList&lt;&gt;();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		if (elementos != null) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">			for (int i = 0; i &lt; elementos.length; i++) {</span>
+<span class="fc" id="L32">				this.elementos.addElement(elementos[i]);</span>
+			}
+		}
+<span class="fc" id="L35">	}</span>
+
+	/**
+	 * Devuelve el orden en que los elementos fueron eliminados según la lógica de Josephus.
+	 *
+	 * @return Cadena que representa el orden de eliminación
+	 */
+	public String ordenEliminar() {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if (n == 0) {</span>
+<span class="fc" id="L44">			throw new RuntimeException(&quot;No hay ninguna persona&quot;);</span>
+		}
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (n == 1)</span>
+<span class="fc" id="L47">			return &quot;Solo hay una persona&quot;;</span>
+
+<span class="fc" id="L49">		String s = &quot;Orden de eliminación:\n&quot;;</span>
+<span class="fc" id="L50">		int cont = 0;</span>
+
+		// Se recorre la lista hasta que esté vacía
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		while (this.elementos.getSize() != 0) {</span>
+<span class="fc" id="L54">			T aux = elementos.getElement(0); // Se obtiene el primer elemento</span>
+<span class="fc" id="L55">			elementos.removeElement(aux);    // Se elimina temporalmente</span>
+<span class="fc" id="L56">			cont++;</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (cont % k == 0) {</span>
+				// Si es múltiplo de k, el elemento es eliminado
+<span class="fc" id="L60">				s += &quot;Debe morir &quot; + aux + &quot;\n&quot;;</span>
+			} else {
+				// Si no, se vuelve a encolar al final de la lista
+<span class="fc" id="L63">				this.elementos.addElement(aux);</span>
+			}
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">		return s;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ordenacion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.ordenacion</a> &gt; <span class="el_source">Ordenacion.java</span></div><h1>Ordenacion.java</h1><pre class="source lang-java linenums">/**
+ * Clase que implementa varios algoritmos de ordenación para arrays de elementos comparables.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.ordenacion;
+
+import java.util.Arrays;
+
+<span class="nc" id="L12">public class Ordenacion {</span>
+
+    /**
+     * Ordena un array usando el algoritmo de ordenación por inserción.
+     *
+     * @param array Array de elementos que implementan Comparable
+     */
+    public static void ordenacionPorInsercion(Comparable[] array) {
+        Comparable actual;
+<span class="fc" id="L21">        int j = 0;</span>
+
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for (int i = 1; i &lt;= array.length - 1; i++) {</span>
+<span class="fc" id="L24">            actual = array[i];</span>
+<span class="fc" id="L25">            j = i - 1;</span>
+
+            // Desplaza elementos mayores hacia la derecha
+<span class="fc bfc" id="L28" title="All 4 branches covered.">            while (j &gt;= 0 &amp;&amp; array[j].compareTo(actual) &gt; 0) {</span>
+<span class="fc" id="L29">                array[j + 1] = array[j];</span>
+<span class="fc" id="L30">                j = j - 1;</span>
+            }
+
+<span class="fc" id="L33">            array[j + 1] = actual; // Inserta en la posición correcta</span>
+        }
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Ordena un array usando el algoritmo Merge Sort.
+     *
+     * @param arr Array de elementos que implementan Comparable
+     */
+    public static void mergeSort(Comparable[] arr) {
+<span class="pc bpc" id="L43" title="2 of 4 branches missed.">        if (arr == null || arr.length &lt;= 1)</span>
+<span class="nc" id="L44">            return;</span>
+
+<span class="fc" id="L46">        mergeSort(arr, 0, arr.length - 1);</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Método recursivo que divide el array en mitades y las ordena.
+     *
+     * @param arr   Array a ordenar
+     * @param left  Índice izquierdo del subarray
+     * @param right Índice derecho del subarray
+     */
+    private static void mergeSort(Comparable[] arr, int left, int right) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (left &lt; right) {</span>
+<span class="fc" id="L58">            int middle = (left + right) / 2;</span>
+<span class="fc" id="L59">            mergeSort(arr, left, middle);       // Ordenar mitad izquierda</span>
+<span class="fc" id="L60">            mergeSort(arr, middle + 1, right);  // Ordenar mitad derecha</span>
+<span class="fc" id="L61">            merge(arr, left, middle, right);    // Combinar mitades ordenadas</span>
+        }
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Combina dos subarrays ordenados en uno solo ordenado.
+     *
+     * @param arr    Array principal
+     * @param left   Índice del primer elemento
+     * @param middle Índice medio que separa las mitades
+     * @param right  Índice del último elemento
+     */
+    private static void merge(Comparable[] arr, int left, int middle, int right) {
+<span class="fc" id="L74">        int n1 = middle - left + 1;</span>
+<span class="fc" id="L75">        int n2 = right - middle;</span>
+
+        // Arrays temporales para las mitades
+<span class="fc" id="L78">        Comparable[] L = new Comparable[n1];</span>
+<span class="fc" id="L79">        Comparable[] R = new Comparable[n2];</span>
+
+        // Copiar datos a arrays temporales
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int i = 0; i &lt; n1; ++i) {</span>
+<span class="fc" id="L83">            L[i] = arr[left + i];</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int j = 0; j &lt; n2; ++j) {</span>
+<span class="fc" id="L86">            R[j] = arr[middle + 1 + j];</span>
+        }
+
+        // Combinar arrays L y R
+<span class="fc" id="L90">        int i = 0, j = 0, k = left;</span>
+
+<span class="fc bfc" id="L92" title="All 4 branches covered.">        while (i &lt; n1 &amp;&amp; j &lt; n2) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            if (L[i].compareTo(R[j]) &lt;= 0) {</span>
+<span class="fc" id="L94">                arr[k] = L[i];</span>
+<span class="fc" id="L95">                i++;</span>
+            } else {
+<span class="fc" id="L97">                arr[k] = R[j];</span>
+<span class="fc" id="L98">                j++;</span>
+            }
+<span class="fc" id="L100">            k++;</span>
+        }
+
+        // Copiar cualquier elemento restante de L
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        while (i &lt; n1) {</span>
+<span class="fc" id="L105">            arr[k] = L[i];</span>
+<span class="fc" id="L106">            i++;</span>
+<span class="fc" id="L107">            k++;</span>
+        }
+
+        // Copiar cualquier elemento restante de R
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        while (j &lt; n2) {</span>
+<span class="fc" id="L112">            arr[k] = R[j];</span>
+<span class="fc" id="L113">            j++;</span>
+<span class="fc" id="L114">            k++;</span>
+        }
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * Ordena un array utilizando el método sort de la clase Arrays.
+     *
+     * @param array Array a ordenar
+     */
+    public static void sort(Comparable[] array) {
+<span class="fc" id="L124">        Arrays.sort(array);</span>
+<span class="fc" id="L125">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

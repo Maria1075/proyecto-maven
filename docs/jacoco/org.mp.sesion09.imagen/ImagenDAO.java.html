@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImagenDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.imagen</a> &gt; <span class="el_source">ImagenDAO.java</span></div><h1>ImagenDAO.java</h1><pre class="source lang-java linenums">/**
+ * Clase DAO (Data Access Object) para manejar operaciones de entrada/salida
+ * de objetos tipo Imagen, incluyendo lectura y escritura de archivos en formato BSQ.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion09.imagen;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+<span class="nc" id="L16">public class ImagenDAO {</span>
+
+    /**
+     * Escribe la cabecera del archivo de imagen y luego los datos en formato BSQ si corresponde.
+     *
+     * @param nombreArchivo Ruta del archivo a escribir
+     * @param imagen         Imagen a guardar
+     * @throws IOException Si ocurre un error de escritura
+     */
+    public static void escribirArchivo(String nombreArchivo, Imagen imagen) throws IOException {
+<span class="fc" id="L26">        File archivo = new File(nombreArchivo);</span>
+<span class="fc" id="L27">        FileWriter fw = new FileWriter(archivo);</span>
+<span class="fc" id="L28">        BufferedWriter bw = new BufferedWriter(fw);</span>
+<span class="fc" id="L29">        PrintWriter pw = new PrintWriter(bw);</span>
+<span class="fc" id="L30">        String nombre = archivo.getName();</span>
+
+        // Cabecera: archivo.dat TipoImagen FormatoImagen nBandas [nombresBandas] filas columnas
+<span class="fc" id="L33">        nombre = nombre.substring(0, nombre.indexOf(&quot;.&quot;));</span>
+<span class="fc" id="L34">        pw.println(nombre + &quot;.dat&quot;);</span>
+<span class="fc" id="L35">        pw.println(imagen.getTipoImagen());</span>
+<span class="fc" id="L36">        pw.println(imagen.getFormatoImagen());</span>
+<span class="fc" id="L37">        pw.println(imagen.getNumeroBandas());</span>
+
+<span class="fc" id="L39">        List&lt;String&gt; nombreBandas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L40">        Iterator&lt;Banda&lt;?&gt;&gt; bandas = imagen.getBandas().iterator();</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        while (bandas.hasNext())</span>
+<span class="fc" id="L42">            nombreBandas.add(bandas.next().getNombreBanda());</span>
+
+<span class="fc" id="L44">        StringBuffer nombresBandas = new StringBuffer(&quot;[&quot;);</span>
+<span class="fc" id="L45">        Iterator&lt;String&gt; nombres = nombreBandas.iterator();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        while (nombres.hasNext()) {</span>
+<span class="fc" id="L47">            nombresBandas.append(nombres.next());</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (nombres.hasNext())</span>
+<span class="fc" id="L49">                nombresBandas.append(&quot;;&quot;);</span>
+        }
+<span class="fc" id="L51">        nombresBandas.append(&quot;]&quot;);</span>
+<span class="fc" id="L52">        pw.println(nombresBandas);</span>
+<span class="fc" id="L53">        pw.println(imagen.getLineas());</span>
+<span class="fc" id="L54">        pw.println(imagen.getColumnas());</span>
+<span class="fc" id="L55">        pw.close();</span>
+
+<span class="fc" id="L57">        String nombreNuevo = archivo.getParent() + File.separator + nombre + &quot;.dat&quot;;</span>
+
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (imagen.getFormatoImagen().equals(&quot;BSQ&quot;))</span>
+<span class="fc" id="L60">            escribirBSQ(nombreNuevo, imagen);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Escribe los datos de la imagen en formato BSQ (una banda tras otra).
+     *
+     * @param nombreArchivo Archivo binario de salida
+     * @param imagen         Imagen con los datos
+     */
+    private static void escribirBSQ(String nombreArchivo, Imagen imagen) {
+        try {
+<span class="fc" id="L71">            DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File(nombreArchivo)));</span>
+<span class="fc" id="L72">            Iterator&lt;Banda&lt;?&gt;&gt; iterator = imagen.getBandas().iterator();</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            while (iterator.hasNext()) {</span>
+<span class="fc" id="L75">                Banda&lt;?&gt; actual = iterator.next();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                for (int i = 0; i &lt; imagen.getLineas(); i++) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                    for (int j = 0; j &lt; imagen.getColumnas(); j++) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                        if (imagen.getTipoImagen().equals(&quot;Integer&quot;))</span>
+<span class="fc" id="L79">                            dos.writeInt((int) actual.getDatoXY(i, j));</span>
+                        else
+<span class="fc" id="L81">                            dos.writeDouble((double) actual.getDatoXY(i, j));</span>
+                    }
+                }
+<span class="fc" id="L84">            }</span>
+<span class="fc" id="L85">            dos.close();</span>
+<span class="nc" id="L86">        } catch (Exception e) {</span>
+<span class="nc" id="L87">            e.printStackTrace();</span>
+<span class="fc" id="L88">        }</span>
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Lee una imagen desde su archivo de cabecera y datos BSQ.
+     *
+     * @param nombreArchivo Ruta al archivo de cabecera
+     * @return Imagen reconstruida
+     */
+    public static Imagen leerArchivo(String nombreArchivo) {
+<span class="fc" id="L98">        Imagen imagen = null;</span>
+<span class="fc" id="L99">        String[] nombresBandas = null;</span>
+<span class="fc" id="L100">        String tipoImagen = null;</span>
+<span class="fc" id="L101">        String archivoImagen = &quot;&quot;;</span>
+
+        try {
+<span class="fc" id="L104">            BufferedReader br = new BufferedReader(new FileReader(new File(nombreArchivo)));</span>
+<span class="fc" id="L105">            archivoImagen = br.readLine();</span>
+<span class="fc" id="L106">            tipoImagen = br.readLine();</span>
+<span class="fc" id="L107">            String formatoImagen = br.readLine();</span>
+<span class="fc" id="L108">            int nBandas = Integer.parseInt(br.readLine());</span>
+<span class="fc" id="L109">            String nombreBandas = br.readLine();</span>
+<span class="fc" id="L110">            nombresBandas = nombreBandas.substring(1, nombreBandas.length() - 1).split(&quot;;&quot;);</span>
+<span class="fc" id="L111">            int lineas = Integer.parseInt(br.readLine());</span>
+<span class="fc" id="L112">            int columnas = Integer.parseInt(br.readLine());</span>
+<span class="fc" id="L113">            br.close();</span>
+
+<span class="fc" id="L115">            imagen = new Imagen(lineas, columnas, formatoImagen, tipoImagen);</span>
+<span class="nc" id="L116">        } catch (Exception e) {</span>
+<span class="nc" id="L117">            e.printStackTrace();</span>
+<span class="fc" id="L118">        }</span>
+
+<span class="fc" id="L120">        archivoImagen = System.getProperty(&quot;user.dir&quot;) + File.separator + &quot;src&quot; + File.separator + &quot;test&quot;</span>
+                + File.separator + &quot;java&quot; + File.separator + &quot;org&quot; + File.separator + &quot;mp&quot; + File.separator + &quot;sesion09&quot;
+                + File.separator + &quot;imagen&quot; + File.separator + archivoImagen;
+
+<span class="fc" id="L124">        imagen = leerBSQ(archivoImagen, imagen, nombresBandas, tipoImagen);</span>
+<span class="fc" id="L125">        return imagen;</span>
+    }
+
+    /**
+     * Lee los datos BSQ de un archivo binario y los carga en una Imagen.
+     *
+     * @param nombreArchivo Ruta del archivo binario BSQ
+     * @param imagen         Objeto Imagen a completar
+     * @param nBandas        Arreglo con los nombres de las bandas
+     * @param tipoImagen     Tipo de datos (Integer o Double)
+     * @return Imagen con bandas cargadas
+     */
+    private static Imagen leerBSQ(String nombreArchivo, Imagen imagen, String[] nBandas, String tipoImagen) {
+<span class="fc" id="L138">        Integer[][] datosI = null;</span>
+<span class="fc" id="L139">        Double[][] datosD = null;</span>
+<span class="fc" id="L140">        boolean isInteger = false;</span>
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (tipoImagen.equals(&quot;Integer&quot;)) {</span>
+<span class="fc" id="L143">            datosI = new Integer[imagen.getLineas()][imagen.getColumnas()];</span>
+<span class="fc" id="L144">            isInteger = true;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        } else if (tipoImagen.equals(&quot;Double&quot;)) {</span>
+<span class="fc" id="L146">            datosD = new Double[imagen.getLineas()][imagen.getColumnas()];</span>
+        }
+
+        try {
+<span class="fc" id="L150">            DataInputStream dis = new DataInputStream(new FileInputStream(nombreArchivo));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            for (int i = 0; i &lt; nBandas.length; i++) {</span>
+<span class="fc" id="L152">                String nomBanda = nBandas[i];</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                for (int j = 0; j &lt; imagen.getLineas(); j++) {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                    for (int k = 0; k &lt; imagen.getColumnas(); k++) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">                        if (isInteger)</span>
+<span class="fc" id="L156">                            datosI[j][k] = dis.readInt();</span>
+                        else
+<span class="fc" id="L158">                            datosD[j][k] = dis.readDouble();</span>
+                    }
+                }
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                Banda&lt;Number&gt; bandaNueva = isInteger</span>
+<span class="fc" id="L162">                        ? new Banda&lt;&gt;(nomBanda, datosI)</span>
+<span class="fc" id="L163">                        : new Banda&lt;&gt;(nomBanda, datosD);</span>
+<span class="fc" id="L164">                imagen.anadirBanda(bandaNueva);</span>
+            }
+<span class="fc" id="L166">            dis.close();</span>
+<span class="nc" id="L167">        } catch (IOException e) {</span>
+<span class="nc" id="L168">            e.printStackTrace();</span>
+<span class="fc" id="L169">        }</span>
+
+<span class="fc" id="L171">        return imagen;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Mayor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion01</a> &gt; <span class="el_source">Mayor.java</span></div><h1>Mayor.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @since 2025
+ */
+package org.mp.sesion01;
+/**
+ * La clase Mayor proporciona un metodo estatico para encontrar el valor entero mas grande
+ * dentro de un array de enteros.
+ *
+ * Esta clase es útil cuando se necesita determinar el elemento máximo en un conjunto de datos
+ * representados como un array de enteros.
+ */
+<span class="nc" id="L13">public class Mayor {</span>
+
+    /**
+     * Encuentra el entero mayor en un array de enteros dado.
+     *
+     * Este metodo recorre el array de entrada y compara cada elemento con el valor maximo
+     * encontrado hasta el momento. Si un elemento es mayor que el maximo actual, se actualiza
+     * el valor maximo.
+     * si el array esta vacio va a lanzar una excepcion     
+     * @param a El array de enteros en el que se desea encontrar el mayor.
+     * @return El valor entero mas grande encontrado en el array.
+     * @throws RuntimeException Si el array de entrada es nulo o esta vacio.
+     *
+     * Ejemplo de uso:
+     * int[] numeros = {10, 5, 20, 8, 15};
+     * int maximo = Mayor.elEnteroMayor(numeros); // maximo sera 20
+     */
+    public static int elEnteroMayor(int[] a) {
+        // Verifica si el array es nulo o vacío
+<span class="pc bpc" id="L32" title="1 of 4 branches missed.">        if (a == null || a.length == 0) {</span>
+            // Lanza una excepcion si el array es nulo o vacío
+<span class="fc" id="L34">            throw new RuntimeException(&quot;Array vacio&quot;);</span>
+        }
+
+        // Inicializa el valor máximo con el valor mínimo posible para un entero
+<span class="fc" id="L38">        int max = Integer.MIN_VALUE;</span>
+
+        // Recorre el array y compara cada elemento con el valor máximo actual
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (int indice = 0; indice &lt; a.length; indice++) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (a[indice] &gt; max) {</span>
+                // Actualiza el valor máximo si se encuentra un elemento mayor
+<span class="fc" id="L44">                max = a[indice];</span>
+            }
+        }
+
+        // Devuelve el valor máximo encontrado
+<span class="fc" id="L49">        return max;</span>
+    }
+}
+	 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

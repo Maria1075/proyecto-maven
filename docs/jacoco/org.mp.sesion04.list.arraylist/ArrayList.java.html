@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion04.list.arraylist</a> &gt; <span class="el_source">ArrayList.java</span></div><h1>ArrayList.java</h1><pre class="source lang-java linenums">package org.mp.sesion04.list.arraylist;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import org.mp.sesion04.list.AbstractList;
+/**
+ * {@code ArrayList&lt;E&gt;} es una implementación de la interfaz {@link org.mp.sesion04.list.List}
+ * que utiliza un array dinámico para almacenar los elementos. Permite el acceso rápido
+ * a los elementos por su índice y puede redimensionar su capacidad según sea necesario.
+ * Hereda de la clase abstracta {@link AbstractList}, proporcionando implementaciones
+ * específicas para las operaciones de lista basadas en un array.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta lista.
+ */
+public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; {
+
+	private static final int CAPACIDAD_INICIAL = 16;
+
+<span class="fc" id="L20">	private E[] data = (E[]) new Object[CAPACIDAD_INICIAL];</span>
+
+	/**
+	 * Crea una lista vacía con la capacidad inicial predeterminada (16 elementos).
+	 */
+<span class="fc" id="L25">	public ArrayList() {</span>
+<span class="fc" id="L26">	}</span>
+	/**
+	 * Crea una lista e inicializa sus elementos a partir de los elementos de un array dado.
+	 * La capacidad inicial de la lista será al menos el tamaño del array proporcionado.
+	 *
+	 * @param objects El array de objetos cuyos elementos se añadirán a la nueva lista.
+	 */
+<span class="fc" id="L33">	public ArrayList(E[] objects) {</span>
+
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		for (int i = 0; i &lt; objects.length; i++)</span>
+<span class="fc" id="L36">			add(objects[i]); // Advertencia: no usar super(objects)!</span>
+
+<span class="fc" id="L38">	}</span>
+
+	/**
+	 * Compara esta lista con otro objeto para determinar si son iguales.
+	 * Dos listas ArrayList son iguales si tienen el mismo tamaño y contienen los mismos
+	 * elementos en el mismo orden.
+	 *
+	 * @param obj El objeto con el que se va a comparar esta lista.
+	 * @return {@code true} si el objeto especificado es igual a esta lista, {@code false} en caso contrario.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if(this == obj) return true;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if(obj == null) return false;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		if(this.getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L53">		ArrayList&lt;E&gt; otro = (ArrayList&lt;E&gt;) obj;</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if(this.size() != otro.size()) return false;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			if(!this.data[i].equals(otro.data[i])) return false;</span>
+		}
+<span class="fc" id="L58">		return true;</span>
+		//[ A, B, C ]  &lt;--&gt; [ A, B ] =&gt; false
+		//[ A, B, C ]  &lt;--&gt; [ A, B, C ] =&gt; true
+	}
+	/**
+	 * Añade un nuevo elemento en la posición especificada por el índice.
+	 * Si el índice es igual al tamaño actual de la lista, el elemento se añade al final.
+	 * Los elementos posteriores al índice se desplazan hacia la derecha.
+	 * Asegura que haya suficiente capacidad en el array antes de la inserción.
+	 *
+	 * @param index El índice en el que se va a insertar el elemento (comenzando desde 0).
+	 * @param e     El elemento que se va a añadir a la lista.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt; size()}).
+	 */
+	@Override /** Anade un nuevo elemento en la posición especifica por index */
+	public void add(int index, E e) {
+<span class="fc" id="L74">		ensureCapacity();</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">		if (index &lt; 0 || index &gt; size)</span>
+<span class="fc" id="L76">			throw new IndexOutOfBoundsException(&quot;Indice: &quot; + index + &quot;, Tamaño: &quot; + size);</span>
+
+		// Mueve los elementos a la derecha de la posicion especificada por index
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for (int i = size - 1; i &gt;= index; i--)</span>
+<span class="fc" id="L80">			data[i + 1] = data[i];</span>
+
+		// Inserta un nuevo elemento en data[index]
+<span class="fc" id="L83">		data[index] = e;</span>
+
+		// Incrementa el tamano en 1
+<span class="fc" id="L86">		size++;</span>
+<span class="fc" id="L87">	}</span>
+	/**
+	 * Asegura que el array interno tenga suficiente capacidad para añadir un nuevo elemento.
+	 * Si el array está lleno (el tamaño es igual a la capacidad), crea un nuevo array
+	 * con una capacidad mayor (doble del tamaño actual más 1), copia los elementos
+	 * del array antiguo al nuevo y actualiza la referencia del array interno.
+	 * Crea un nuevo array de tamano doble +1 */
+
+	private void ensureCapacity() {
+		// POR HACER
+		// Verifica cuando el array está lleno. De ser así,
+		// crea un nuevo array con el doble tamaño más 1 y copia
+		// el array en el nuevo utilizando el método System.
+		// arraycopy y pone el nuevo array como el array a utilizar
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if(size == data.length) {</span>
+<span class="fc" id="L102">			E[] aux = (E[]) new Object[size * 2 + 1];</span>
+//			for (int i = 0; i &lt; size; i++) {
+//				aux[i] = data[i];
+//			}
+<span class="fc" id="L106">			System.arraycopy(data, 0, aux, 0, size);</span>
+<span class="fc" id="L107">			data = aux;</span>
+		}
+<span class="fc" id="L109">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina todos los elementos de la lista. El array interno se reemplaza por uno
+	 * nuevo con la capacidad inicial predeterminada, y el tamaño se restablece a 0.
+	 */
+	@Override /** Elimina todos los elementos de la lista */
+	public void clear() {
+		// POR HACER
+		// Crea un nuevo array de tamaño CAPACIDAD_INICIAL y resetea la variable size a
+		// 0
+<span class="fc" id="L121">		data = (E[]) new Object[CAPACIDAD_INICIAL];</span>
+<span class="fc" id="L122">		size = 0;</span>
+<span class="fc" id="L123">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Comprueba si la lista contiene el elemento especificado. Utiliza el método
+	 * {@link #indexOf(Object)} para buscar el elemento y devuelve {@code true} si
+	 * el índice devuelto no es -1.
+	 */
+	@Override /** Devuelve true si la lista contiene el elemento */
+	public boolean contains(E e) {
+		// POR HACER
+		// Comprueba si e está en el array comparando cada elemento del array con e
+		// usando para
+		// ello equals
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		return indexOf(e) != -1;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el elemento en la posición especificada por el índice.
+	 * Lanza una excepción si el índice está fuera del rango válido.
+	 */
+	@Override /** Devuelve el elemento en la posicion index especificada */
+	public E get(int index) {
+<span class="fc" id="L147">		checkIndex(index);</span>
+<span class="fc" id="L148">		return data[index];</span>
+	}
+	/**
+	 * Verifica si el índice proporcionado está dentro del rango válido de la lista.
+	 *
+	 * @param index El índice que se va a verificar.
+	 * @throws IndexOutOfBoundsException Si el índice es menor que 0 o mayor o igual que el tamaño de la lista.
+	 */
+	private void checkIndex(int index) {
+<span class="fc bfc" id="L157" title="All 4 branches covered.">		if (index &lt; 0 || index &gt;= size) // Comprueba si index está en el rango</span>
+<span class="fc" id="L158">			throw new IndexOutOfBoundsException(&quot;Indice: &quot; + index + &quot;, Tamaño: &quot; + size); // Si no, el método lanza esa</span>
+																							// Excepción
+<span class="fc" id="L160">	}</span>
+	/**
+	 * Devuelve la capacidad actual del array interno. Este método se proporciona
+	 * principalmente para pruebas y no forma parte de la interfaz {@link org.mp.sesion04.list.List}.
+	 *
+	 * @return La longitud del array interno.
+	 */
+	private int getLength() {
+<span class="nc" id="L168">		return data.length;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el índice de la primera ocurrencia del elemento especificado en la lista.
+	 * Devuelve -1 si el elemento no está presente. Utiliza el método {@code equals}
+	 * para comparar los elementos.
+	 */
+	@Override 
+	public int indexOf(E e) {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if(data[i].equals(e)) {</span>
+<span class="fc" id="L181">				return i;</span>
+			}
+		}
+<span class="fc" id="L184">		return -1;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el índice de la última ocurrencia del elemento especificado en la lista.
+	 * Devuelve -1 si el elemento no está presente. Utiliza el método {@code equals}
+	 * para comparar los elementos, buscando desde el final de la lista hacia el principio.
+	 */
+	@Override 
+	public int lastIndexOf(E e) {
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		for (int i = size-1; i &gt;= 0; i--) {</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">			if(data[i].equals(e)) {</span>
+<span class="fc" id="L197">				return i;</span>
+			}
+		}
+<span class="nc" id="L200">		return -1;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina el elemento en la posición especificada por el índice.
+	 * Los elementos posteriores al índice se desplazan hacia la izquierda.
+	 * Devuelve el elemento que ha sido eliminado de la lista.
+	 *
+	 * @param index El índice del elemento que se va a borrar (comenzando desde 0).
+	 * @return El elemento que fue borrado de la lista.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt;= size()}).
+	 */
+	@Override 
+
+	public E remove(int index) {
+<span class="fc" id="L216">		checkIndex(index);</span>
+<span class="fc" id="L217">		E aux = data[index];</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		for (int i = index; i &lt; size - 1; i++) {</span>
+<span class="fc" id="L219">			data[i] = data[i+1];</span>
+		}
+<span class="fc" id="L221">		size--;</span>
+<span class="fc" id="L222">		return aux;</span>
+
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Sustituye el elemento en la posición especificada por el índice con el elemento
+	 * especificado y devuelve el elemento que estaba previamente en esa posición.
+	 *
+	 * @param index El índice del elemento que se va a sustituir (comenzando desde 0).
+	 * @param e     El nuevo elemento que se va a almacenar en la lista.
+	 * @return El elemento que estaba previamente en la posición especificada por el índice.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt;= size()}).
+	 */
+	@Override 
+	public E set(int index, E e) {
+<span class="fc" id="L238">		checkIndex(index);</span>
+<span class="fc" id="L239">		E antiguo = data[index];</span>
+<span class="fc" id="L240">		data[index] = e;</span>
+<span class="fc" id="L241">		return antiguo;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve una representación en cadena de la lista, que consiste en una secuencia
+	 * de los elementos de la lista en el orden en que se encuentran, encerrados entre
+	 * corchetes (&quot;[]&quot;). Los elementos adyacentes están separados por una coma y un espacio.
+	 */
+	@Override
+	public String toString() {
+		//[A, B, C, D]
+		//[]
+<span class="fc" id="L254">		StringBuilder resultado = new StringBuilder(&quot;[&quot;);</span>
+
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L257">			resultado.append(data[i]);</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">			if (i &lt; size - 1)</span>
+<span class="fc" id="L259">				resultado.append(&quot;, &quot;);</span>
+		}
+
+<span class="fc" id="L262">		return resultado.toString() + &quot;]&quot;;</span>
+
+	}
+
+	/**
+	 * Reduce la capacidad del array interno al tamaño actual de la lista.
+	 * Esto puede liberar memoria no utilizada si la lista ha reducido su tamaño.
+	 * Si el tamaño actual es igual a la capacidad, no se realiza ninguna acción.
+	 *
+	 * @throws RuntimeException Si el tamaño de la lista ya coincide con la capacidad del array.
+	 */
+	public void trimToSize() {
+
+		// POR HACER
+		// si el tamaño del array es distinto de la capacidad
+		// Crea un nuevo array del tamaño del que se tiene
+		// Copia el array en el nuevo array utilizando System.arraycopy
+		// Si tamaño == capacidad, no es necesario hacer nada
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if(size &lt; data.length) {</span>
+<span class="fc" id="L281">			E[] aux = (E[]) new Object[size];</span>
+<span class="fc" id="L282">			System.arraycopy(data, 0, aux, 0, size);</span>
+<span class="fc" id="L283">		}else {</span>
+<span class="fc" id="L284">			throw new RuntimeException(&quot;Guapit@ no necesitas hacer un trim, el tamaño coincide con la capacidad&quot;);</span>
+		}
+<span class="fc" id="L286">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve un iterador sobre los elementos de esta lista en la secuencia apropiada.
+	 * El iterador proporcionado por esta clase es fail-fast.
+	 */
+	@Override /** Sobre-escribe el metodo iterator() definido en Iterable */
+	public Iterator&lt;E&gt; iterator() {
+<span class="fc" id="L295">		return new ArrayListIterator();</span>
+	}
+	/**
+	 * Clase interna que implementa la interfaz {@link Iterator} para la clase {@code ArrayList}.
+	 * Proporciona la funcionalidad para recorrer los elementos de la lista.
+	 */
+<span class="fc" id="L301">	private class ArrayListIterator implements Iterator&lt;E&gt; {</span>
+<span class="fc" id="L302">		private int current = 0; // indice current</span>
+<span class="fc" id="L303">		private boolean removePermitido = false; // solo se permite si se hace next</span>
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean hasNext() {
+<span class="fc bfc" id="L309" title="All 2 branches covered.">			return current &lt; size;</span>
+		}
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @throws NoSuchElementException Si no hay más elementos para devolver.
+		 */
+		@Override
+		public E next() {
+<span class="fc bfc" id="L318" title="All 2 branches covered.">			if(!hasNext()) {</span>
+<span class="fc" id="L319">				throw new NoSuchElementException(&quot;No hay más elementos en la lista&quot;);</span>
+			}
+<span class="fc" id="L321">			E aux = data[current];</span>
+<span class="fc" id="L322">			current++;</span>
+<span class="fc" id="L323">			removePermitido = true;</span>
+<span class="fc" id="L324">			return aux;</span>
+		}
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @throws IllegalStateException Si este método se llama antes de {@link #next()} o si {@link #remove()} ya ha sido llamado después de la última llamada a {@code next()}.
+		 */
+		@Override
+		public void remove() {
+<span class="fc bfc" id="L333" title="All 2 branches covered.">			if(removePermitido) {</span>
+<span class="fc" id="L334">				current--;</span>
+<span class="fc" id="L335">				ArrayList.this.remove(current);</span>
+<span class="fc" id="L336">				removePermitido = false;</span>
+			}else {
+<span class="fc" id="L338">				throw new IllegalStateException(&quot;No se puede usar remove() sin hacer next()&quot;);</span>
+			}
+<span class="fc" id="L340">		}</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

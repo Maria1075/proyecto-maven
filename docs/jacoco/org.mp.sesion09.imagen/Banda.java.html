@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Banda.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.imagen</a> &gt; <span class="el_source">Banda.java</span></div><h1>Banda.java</h1><pre class="source lang-java linenums">/**
+ * Clase genérica que representa una banda de datos numéricos bidimensionales.
+ * Utilizada principalmente en procesamiento de imágenes (por ejemplo, una banda espectral).
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion09.imagen;
+
+public class Banda&lt;T extends Number&gt; {
+
+	private String nombreBanda; // Nombre identificador de la banda
+	private T[][] datos;        // Matriz de datos de la banda
+
+	/**
+	 * Constructor que inicializa la banda con nombre y matriz de datos.
+	 *
+	 * @param nombre Nombre de la banda
+	 * @param datos  Matriz de datos numéricos
+	 */
+<span class="fc" id="L22">	public Banda(String nombre, T[][] datos) {</span>
+<span class="fc" id="L23">		this.nombreBanda = nombre;</span>
+<span class="fc" id="L24">		this.datos = datos;</span>
+<span class="fc" id="L25">	}</span>
+
+	/**
+	 * Constructor que inicializa la banda con nombre y dimensiones vacías.
+	 *
+	 * @param nombre Nombre de la banda
+	 * @param x      Número de filas
+	 * @param y      Número de columnas
+	 */
+<span class="nc" id="L34">	public Banda(String nombre, int x, int y) {</span>
+<span class="nc" id="L35">		this.nombreBanda = nombre;</span>
+<span class="nc" id="L36">		this.datos = (T[][]) new Number[x][y];</span>
+<span class="nc" id="L37">	}</span>
+
+	/**
+	 * @return Nombre de la banda
+	 */
+	public String getNombreBanda() {
+<span class="fc" id="L43">		return nombreBanda;</span>
+	}
+
+	/**
+	 * Asigna un nuevo nombre a la banda.
+	 *
+	 * @param nombreBanda Nuevo nombre
+	 */
+	public void setNombreBanda(String nombreBanda) {
+<span class="nc" id="L52">		this.nombreBanda = nombreBanda;</span>
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * @return Matriz de datos de la banda
+	 */
+	public T[][] getDatos() {
+<span class="fc" id="L59">		return datos;</span>
+	}
+
+	/**
+	 * Asigna una nueva matriz de datos a la banda.
+	 *
+	 * @param datos Matriz de datos a establecer
+	 */
+	public void setDatos(T[][] datos) {
+<span class="nc" id="L68">		this.datos = datos;</span>
+<span class="nc" id="L69">	}</span>
+
+	/**
+	 * Obtiene el valor en la posición (x, y) de la matriz de datos.
+	 *
+	 * @param x Fila
+	 * @param y Columna
+	 * @return Valor almacenado en la posición indicada
+	 */
+	public T getDatoXY(int x, int y) {
+<span class="fc" id="L79">		return datos[x][y];</span>
+	}
+
+	/**
+	 * Asigna un valor en la posición (x, y) de la matriz de datos.
+	 *
+	 * @param dato Valor a establecer
+	 * @param x    Fila
+	 * @param y    Columna
+	 */
+	public void setDatoXY(T dato, int x, int y) {
+<span class="nc" id="L90">		datos[x][y] = dato;</span>
+<span class="nc" id="L91">	}</span>
+
+	/**
+	 * Representación textual de la banda (actualmente sin implementar).
+	 *
+	 * @return null
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L100">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

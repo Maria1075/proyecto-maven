@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatrizEnteros.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion03.matriz</a> &gt; <span class="el_source">MatrizEnteros.java</span></div><h1>MatrizEnteros.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @sinse 2025
+ */
+package org.mp.sesion03.matriz;
+
+import java.util.Arrays;
+/**
+ * {@code MatrizEnteros}: Representa una matriz de números enteros y ofrece operaciones básicas.
+ * Permite sumar, multiplicar y transponer matrices de enteros.
+ *
+ * @author Maria Camila Soto Zapata
+ * @since 2025
+ */
+public class MatrizEnteros {
+    private int[][] matriz;
+    /**
+     * Constructor: Inicializa una nueva matriz de enteros con las dimensiones especificadas.
+     * @param filas Número de filas de la matriz.
+     * @param columnas Número de columnas de la matriz.
+     */
+<span class="fc" id="L22">    public MatrizEnteros(int filas, int columnas) {</span>
+<span class="fc" id="L23">        matriz = new int[filas][columnas];</span>
+<span class="fc" id="L24">    }</span>
+    /**
+     * Suma esta matriz con otra matriz de enteros.
+     * @param otraMatriz La matriz de enteros a sumar. Debe tener las mismas dimensiones.
+     * @return Una nueva matriz de enteros que representa la suma de las dos matrices.
+     * @throws IllegalArgumentException Si las matrices no tienen el mismo tamaño.
+     */
+    public MatrizEnteros sumar(MatrizEnteros otraMatriz) {
+<span class="pc bpc" id="L32" title="1 of 4 branches missed.">        if (this.matriz.length != otraMatriz.matriz.length || this.matriz[0].length != otraMatriz.matriz[0].length) {</span>
+<span class="fc" id="L33">            throw new IllegalArgumentException(&quot;Las matrices deben tener el mismo tamaño para poder sumarlas.&quot;);</span>
+        }
+
+<span class="fc" id="L36">        int filas = this.matriz.length;</span>
+<span class="fc" id="L37">        int columnas = this.matriz[0].length;</span>
+<span class="fc" id="L38">        MatrizEnteros resultado = new MatrizEnteros(filas, columnas);</span>
+
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (int i = 0; i &lt; filas; i++) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            for (int j = 0; j &lt; columnas; j++) {</span>
+<span class="fc" id="L42">                resultado.matriz[i][j] = this.matriz[i][j] + otraMatriz.matriz[i][j];</span>
+            }
+        }
+
+<span class="fc" id="L46">        return resultado;</span>
+    }
+    /**
+     * Multiplica esta matriz con otra matriz de enteros.
+     * @param otraMatriz La matriz de enteros por la cual multiplicar. El número de columnas de esta matriz debe ser igual al número de filas de la otra matriz.
+     * @return Una nueva matriz de enteros que representa el producto de las dos matrices.
+     * @throws IllegalArgumentException Si el número de columnas de la primera matriz no es igual al número de filas de la segunda matriz.
+     */
+    public MatrizEnteros multiplicar(MatrizEnteros otraMatriz) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (this.matriz[0].length != otraMatriz.matriz.length) {</span>
+<span class="fc" id="L56">            throw new IllegalArgumentException(&quot;El número de columnas de la primera matriz debe ser igual al número de filas de la segunda matriz para poder multiplicarlas.&quot;);</span>
+        }
+
+<span class="fc" id="L59">        int filasA = this.matriz.length;</span>
+<span class="fc" id="L60">        int columnasA = this.matriz[0].length;</span>
+<span class="fc" id="L61">        int columnasB = otraMatriz.matriz[0].length;</span>
+
+<span class="fc" id="L63">        MatrizEnteros resultado = new MatrizEnteros(filasA, columnasB);</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; filasA; i++) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            for (int j = 0; j &lt; columnasB; j++) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">                for (int k = 0; k &lt; columnasA; k++) {</span>
+<span class="fc" id="L68">                    resultado.matriz[i][j] += this.matriz[i][k] * otraMatriz.matriz[k][j];</span>
+                }
+            }
+        }
+
+<span class="fc" id="L73">        return resultado;</span>
+    }
+    /**
+     * Calcula la transpuesta de esta matriz de enteros.
+     * @return Una nueva matriz de enteros que es la transpuesta de esta matriz.
+     */
+    public MatrizEnteros transponer() {
+<span class="fc" id="L80">        int filas = this.matriz.length;</span>
+<span class="fc" id="L81">        int columnas = this.matriz[0].length;</span>
+<span class="fc" id="L82">        MatrizEnteros resultado = new MatrizEnteros(columnas, filas);</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (int i = 0; i &lt; filas; i++) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            for (int j = 0; j &lt; columnas; j++) {</span>
+<span class="fc" id="L86">                resultado.matriz[j][i] = this.matriz[i][j];</span>
+            }
+        }
+
+<span class="fc" id="L90">        return resultado;</span>
+    }
+    /**
+     * Establece el valor de un elemento en la matriz en la fila y columna especificadas.
+     * @param fila El índice de la fila (comenzando desde 0).
+     * @param columna El índice de la columna (comenzando desde 0).
+     * @param valor El valor entero a establecer.
+     */
+    public void setValor(int fila, int columna, int valor) {
+<span class="fc" id="L99">        matriz[fila][columna] = valor;</span>
+<span class="fc" id="L100">    }</span>
+    /**
+     * Obtiene una copia de la matriz interna.
+     * @return Una copia bidimensional del array de enteros que representa la matriz.
+     */
+    public int[][] getMatriz() {
+<span class="fc" id="L106">        return matriz.clone();</span>
+    }
+    
+    
+    /**
+     * Devuelve una representación en cadena de la matriz.
+     * @return Una cadena formateada que muestra los elementos de la matriz.
+     */
+    @Override
+	public String toString() {
+<span class="nc" id="L116">    	String salida = &quot;&quot;;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">    	for (int[] fila : this.matriz) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            for (int elemento : fila) {</span>
+<span class="nc" id="L119">               salida = salida + elemento + &quot;\t&quot;;</span>
+            }
+<span class="nc" id="L121">            salida = salida + &quot;\n&quot;;</span>
+        }
+<span class="nc" id="L123">    	return salida;</span>
+	}
+    /**
+     * Imprime la matriz en la consola.
+     */
+	public void imprimir() {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for (int[] fila : this.matriz) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            for (int elemento : fila) {</span>
+<span class="nc" id="L131">                System.out.print(elemento + &quot; &quot;);</span>
+            }
+<span class="nc" id="L133">            System.out.println();</span>
+        }
+<span class="nc" id="L135">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

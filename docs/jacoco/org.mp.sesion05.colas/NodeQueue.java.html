@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NodeQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion05.colas</a> &gt; <span class="el_source">NodeQueue.java</span></div><h1>NodeQueue.java</h1><pre class="source lang-java linenums">package org.mp.sesion05.colas;
+/**
+ * {@code NodeQueue&lt;E&gt;} es una implementación de la interfaz {@link Queue} que utiliza
+ * nodos enlazados para almacenar los elementos de la cola. Esto permite operaciones
+ * de enqueue (añadir al final) y dequeue (eliminar del frente) con eficiencia de tiempo constante.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta cola.
+ */
+public class NodeQueue &lt;E&gt; implements Queue &lt;E&gt;{
+	/**
+	 * Constructor: Inicializa una nueva cola vacía. Tanto {@code front} como {@code rear}
+	 * se establecen en {@code null}, y el tamaño en 0.
+	 */
+	private Node &lt;E&gt; front;
+	private Node &lt;E&gt; rear;
+	private int size;
+	
+<span class="fc" id="L18">	public NodeQueue() {</span>
+<span class="fc" id="L19">		front = null;</span>
+<span class="fc" id="L20">		rear = null;</span>
+<span class="fc" id="L21">		size = 0;</span>
+<span class="fc" id="L22">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Añade un elemento al final de la cola (operación enqueue).
+	 * Crea un nuevo nodo con el elemento proporcionado. Si la cola está vacía,
+	 * tanto {@code front} como {@code rear} se refieren a este nuevo nodo.
+	 * De lo contrario, el {@code next} del nodo {@code rear} actual se establece
+	 * para que apunte al nuevo nodo, y {@code rear} se actualiza para que se refiera
+	 * al nuevo nodo. El tamaño de la cola se incrementa.
+	 *
+	 * @param e El elemento que se va a añadir a la cola.
+	 */
+	
+	@Override
+	public void enqueue(E e) {
+<span class="fc" id="L38">		Node &lt;E&gt; nuevoNodo = new Node &lt;&gt; (e);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if ( front == null) {</span>
+<span class="fc" id="L40">			front = nuevoNodo;</span>
+<span class="fc" id="L41">			rear = nuevoNodo;</span>
+		} else {
+<span class="fc" id="L43">			rear.next = nuevoNodo;</span>
+<span class="fc" id="L44">			rear = nuevoNodo;</span>
+		}
+<span class="fc" id="L46">		size++;</span>
+<span class="fc" id="L47">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina y devuelve el elemento del frente de la cola (operación dequeue).
+	 * Si la cola no está vacía, se guarda el elemento del nodo {@code front}.
+	 * Luego, {@code front} se actualiza para que se refiera al siguiente nodo.
+	 * Si después de la eliminación {@code front} se vuelve {@code null}, significa
+	 * que la cola ahora está vacía, por lo que {@code rear} también se establece en
+	 * {@code null}. El tamaño de la cola se decrementa y el elemento original
+	 * del frente se devuelve. Si la cola está vacía, devuelve {@code null}.
+	 *
+	 * @return El elemento que estaba al frente de la cola, o {@code null} si la cola está vacía.
+	 */
+
+	@Override
+	public E dequeue() {
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if( size != 0 ) {</span>
+<span class="fc" id="L65">			E aux = front.element;</span>
+<span class="fc" id="L66">			front = front.next;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			if ( front == null) {</span>
+<span class="fc" id="L68">				rear = null;</span>
+			}
+<span class="fc" id="L70">			size--;</span>
+<span class="fc" id="L71">			return aux;</span>
+		}
+<span class="nc" id="L73">		return null;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el número de elementos que contiene la cola.
+	 *
+	 * @return El número de elementos en la cola.
+	 */
+
+	@Override
+	public int getSize() {
+<span class="fc" id="L85">		return size;</span>
+	}
+	/**
+	 * Clase interna estática que representa un nodo en la cola enlazada.
+	 * Cada nodo contiene un elemento de tipo E y una referencia al siguiente nodo en la cola.
+	 */
+
+	private static class Node&lt;E&gt;{
+		E element;
+		Node&lt;E&gt; next;
+		/**
+		 * Constructor: Crea un nuevo nodo con el elemento especificado.
+		 *
+		 * @param element El elemento que se almacenará en este nodo.
+		 */
+<span class="fc" id="L100">		public Node (E element) {</span>
+<span class="fc" id="L101">			this.element = element;</span>
+<span class="fc" id="L102">		}</span>
+	}
+	@Override
+	public void remove(int index) {
+		// TODO Auto-generated method stub
+		
+<span class="nc" id="L108">	}</span>
+	@Override
+	public E get(int index) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L112">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UtilidadesArchivos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion08.utilidades</a> &gt; <span class="el_source">UtilidadesArchivos.java</span></div><h1>UtilidadesArchivos.java</h1><pre class="source lang-java linenums">/**
+ * Clase que proporciona utilidades para la gestión de archivos y directorios,
+ * usando las API de java.io y java.nio.file.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion08.utilidades;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.*;
+import java.util.regex.Pattern;
+
+<span class="nc" id="L18">public class UtilidadesArchivos {</span>
+
+	// Métodos con java.io.File // a)
+
+	/**
+	 * Crea un archivo vacío en la ruta especificada.
+	 */
+	public static void crearArchivo(String ruta) throws IOException {
+<span class="fc" id="L26">		File archivo = new File(ruta);</span>
+<span class="fc" id="L27">		archivo.createNewFile();</span>
+<span class="fc" id="L28">	}</span>
+
+	/**
+	 * Verifica si un archivo existe en la ruta especificada.
+	 */
+	public static boolean verificarExistenciaArchivo(String ruta) {
+<span class="fc" id="L34">		File archivo = new File(ruta);</span>
+<span class="fc" id="L35">		return archivo.exists();</span>
+	}
+
+	/**
+	 * Elimina un archivo si existe.
+	 */
+	public static boolean eliminarArchivo(String ruta) {
+<span class="fc" id="L42">		File archivo = new File(ruta);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if (!archivo.exists())</span>
+<span class="fc" id="L44">			return false;</span>
+<span class="fc" id="L45">		archivo.delete();</span>
+<span class="fc" id="L46">		return true;</span>
+	}
+
+	/**
+	 * Devuelve el nombre del archivo desde una ruta completa.
+	 */
+	public static String obtenerNombreArchivo(String rutaCompleta) {
+<span class="fc" id="L53">		File archivo = new File(rutaCompleta);</span>
+<span class="fc" id="L54">		return archivo.getName();</span>
+	}
+
+	/**
+	 * Devuelve la ruta padre de un archivo.
+	 */
+	public static String obtenerRutaPadre(String rutaCompleta) {
+<span class="fc" id="L61">		File archivo = new File(rutaCompleta);</span>
+<span class="fc" id="L62">		return archivo.getParent();</span>
+	}
+
+	// Métodos con java.nio.file.Files // b)
+
+	/**
+	 * Copia un archivo de una ruta a otra.
+	 */
+	public static void copiarArchivo(String rutaOrigen, String rutaDestino) throws IOException {
+<span class="fc" id="L71">		Path origen = Paths.get(rutaOrigen);</span>
+<span class="fc" id="L72">		Path destino = Paths.get(rutaDestino);</span>
+<span class="fc" id="L73">		Files.copy(origen, destino);</span>
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 * Mueve un archivo de una ruta a otra.
+	 */
+	public static void moverArchivo(String rutaOrigen, String rutaDestino) throws IOException {
+<span class="nc" id="L80">		Path origen = Paths.get(rutaOrigen);</span>
+<span class="nc" id="L81">		Path destino = Paths.get(rutaDestino);</span>
+<span class="nc" id="L82">		Files.move(origen, destino);</span>
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * Obtiene el tamaño de un archivo en bytes.
+	 */
+	public static long obtenerTamanioArchivo(String ruta) throws IOException {
+<span class="fc" id="L89">		Path archivo = Paths.get(ruta);</span>
+<span class="fc" id="L90">		return Files.size(archivo);</span>
+	}
+
+	/**
+	 * Verifica si la ruta corresponde a un directorio.
+	 */
+	public static boolean verificarSiEsDirectorio(String rutaDirectorio) {
+<span class="fc" id="L97">		Path archivo = Paths.get(rutaDirectorio);</span>
+<span class="fc" id="L98">		return Files.isDirectory(archivo);</span>
+	}
+
+	// Métodos con java.nio.file.Path // c)
+
+	/**
+	 * Retorna la ruta absoluta actual del programa.
+	 */
+	public static Path obtenerRutaActual() {
+<span class="fc" id="L107">		return Paths.get(&quot;&quot;).toAbsolutePath();</span>
+	}
+
+	/**
+	 * Retorna la ruta raíz del sistema operativo.
+	 */
+	public static Path obtenerRutaRaiz() {
+<span class="fc" id="L114">		Path rutaRaiz = FileSystems.getDefault().getRootDirectories().iterator().next();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (System.getProperty(&quot;os.name&quot;).toLowerCase().contains(&quot;windows&quot;)) {</span>
+<span class="nc" id="L116">			return Paths.get(rutaRaiz.toString().substring(0, 3));</span>
+		} else {
+<span class="fc" id="L118">			return rutaRaiz;</span>
+		}
+	}
+
+	/**
+	 * Retorna la ruta relativa entre dos rutas dadas.
+	 */
+	public static Path obtenerRutaRelativa(Path rutaBase, Path rutaEspecificada) {
+<span class="fc" id="L126">		return rutaBase.relativize(rutaEspecificada);</span>
+	}
+
+	// Métodos con java.nio.file.Paths // d)
+
+	/**
+	 * Convierte un Path en String.
+	 */
+	public static String obtenerStringRuta(Path ruta) {
+<span class="fc" id="L135">		return ruta.toString();</span>
+	}
+
+	/**
+	 * Compara si dos rutas son iguales.
+	 */
+	public static boolean compararRutas(Path ruta, Path otraRuta) {
+<span class="fc" id="L142">		return ruta.equals(otraRuta);</span>
+	}
+
+	// Otros métodos // e)
+
+	/**
+	 * Copia un directorio completo, incluyendo su contenido, de forma recursiva.
+	 */
+	public static void copiarDirectorioRecursivamente(String rutaOrigen, String rutaDestino) throws IOException {
+<span class="fc" id="L151">		Path origen = Paths.get(rutaOrigen);</span>
+<span class="fc" id="L152">		Path destino = Paths.get(rutaDestino);</span>
+		try {
+<span class="fc" id="L154">			Files.walk(origen).forEach(ruta -&gt; {</span>
+<span class="fc" id="L155">				Path destinoPath = destino.resolve(origen.relativize(ruta));</span>
+				try {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">					if (Files.isDirectory(ruta)) {</span>
+<span class="fc" id="L158">						Files.createDirectories(destinoPath);</span>
+					} else {
+<span class="fc" id="L160">						Files.copy(ruta, destinoPath);</span>
+					}
+<span class="nc" id="L162">				} catch (IOException e) {</span>
+<span class="nc" id="L163">					System.err.println(&quot;Error al copiar &quot; + ruta + &quot; a &quot; + destinoPath);</span>
+<span class="fc" id="L164">				}</span>
+<span class="fc" id="L165">			});</span>
+<span class="nc" id="L166">		} catch (IOException e) {</span>
+<span class="nc" id="L167">			System.err.println(&quot;Error al caminar por &quot; + origen);</span>
+<span class="fc" id="L168">		}</span>
+<span class="fc" id="L169">	}</span>
+
+	/**
+	 * Copia archivos desde un directorio que coincidan con un filtro (expresión regular).
+	 */
+	public static void copiarArchivosConFiltro(String rutaOrigen, String rutaDestino, String filtroNombre)
+			throws IOException {
+<span class="fc" id="L176">		Path origenPath = Paths.get(rutaOrigen);</span>
+<span class="fc" id="L177">		Path destinoPath = Paths.get(rutaDestino);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (!Files.exists(destinoPath)) {</span>
+<span class="fc" id="L179">			Files.createDirectories(destinoPath);</span>
+		}
+<span class="fc" id="L181">		Pattern pattern = Pattern.compile(filtroNombre);</span>
+<span class="fc" id="L182">		try (DirectoryStream&lt;Path&gt; stream = Files.newDirectoryStream(origenPath)) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">			for (Path entry : stream) {</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">				if (pattern.matcher(entry.getFileName().toString()).matches()) {</span>
+<span class="fc" id="L185">					Files.copy(entry, destinoPath.resolve(entry.getFileName()), StandardCopyOption.REPLACE_EXISTING);</span>
+				}
+<span class="fc" id="L187">			}</span>
+		}
+<span class="fc" id="L189">	}</span>
+
+	/**
+	 * Lista los archivos contenidos directamente en un directorio (sin incluir subdirectorios).
+	 */
+	public static List&lt;File&gt; listarArchivosEnDirectorio(String rutaDirectorio) throws IOException {
+<span class="fc" id="L195">		File directorio = new File(rutaDirectorio);</span>
+<span class="fc" id="L196">		List&lt;File&gt; archivos = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (!directorio.isDirectory())</span>
+<span class="nc" id="L198">			return null;</span>
+
+<span class="fc" id="L200">		File[] archivosEnDirectorio = directorio.listFiles();</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		for (File archivo : archivosEnDirectorio) {</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if (archivo.isFile()) {</span>
+<span class="fc" id="L203">				archivos.add(archivo);</span>
+			}
+		}
+<span class="fc" id="L206">		return archivos;</span>
+	}
+
+	/**
+	 * Recorre recursivamente un directorio y aplica una acción (visitor) a cada archivo.
+	 */
+	public static void recorrerDirectorioRecursivamente(String rutaDirectorio, FileVisitor&lt;Path&gt; visitor)
+			throws IOException {
+<span class="fc" id="L214">		Path directorio = Paths.get(rutaDirectorio);</span>
+<span class="fc" id="L215">		Queue&lt;Path&gt; queue = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L216">		queue.offer(directorio);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		while (!queue.isEmpty()) {</span>
+<span class="fc" id="L218">			Path current = queue.poll();</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">			if (Files.isDirectory(current)) {</span>
+<span class="fc" id="L220">				Iterator&lt;Path&gt; iterator = Files.list(current).iterator();</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">				while (iterator.hasNext()) {</span>
+<span class="fc" id="L222">					Path path = iterator.next();</span>
+<span class="fc" id="L223">					queue.offer(path);</span>
+<span class="fc" id="L224">				}</span>
+			}
+<span class="fc" id="L226">			visitor.visitFile(current, Files.readAttributes(current, BasicFileAttributes.class));</span>
+<span class="fc" id="L227">		}</span>
+<span class="fc" id="L228">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

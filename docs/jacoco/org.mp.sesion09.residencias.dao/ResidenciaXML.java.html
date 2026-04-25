@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResidenciaXML.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.residencias.dao</a> &gt; <span class="el_source">ResidenciaXML.java</span></div><h1>ResidenciaXML.java</h1><pre class="source lang-java linenums">/**
+ * Clase que implementa la interfaz DataAccessObject para manejar
+ * operaciones de lectura y escritura de objetos de tipo Residencia
+ * utilizando el formato XML mediante la librería XStream.
+ * 
+ * Permite la persistencia de objetos en archivos XML.
+ *
+ * @author Maria Camila Soto Zapata
+ * @since 2025
+ */
+
+package org.mp.sesion09.residencias.dao;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import java.io.*;
+import org.mp.sesion09.residencias.Residencia;
+
+public class ResidenciaXML implements DataAccessObject {
+    
+    private String archivoDatos;
+
+    /**
+     * Constructor que define la ruta del archivo XML de datos.
+     *
+     * @param archivoDatos Ruta del archivo donde se almacenarán o leerán los datos.
+     */
+<span class="fc" id="L29">    public ResidenciaXML(String archivoDatos) {</span>
+<span class="fc" id="L30">        this.archivoDatos = archivoDatos;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Serializa un objeto a formato XML y lo escribe en el archivo especificado.
+     *
+     * @param object Objeto a serializar.
+     */
+    @Override
+    public void escribir(Object object) {
+<span class="fc" id="L40">        try (FileOutputStream fos = new FileOutputStream(archivoDatos)) {</span>
+<span class="fc" id="L41">            XStream xstream = new XStream(new DomDriver());</span>
+<span class="fc" id="L42">            xstream.toXML(object, fos);</span>
+<span class="nc" id="L43">        } catch (IOException e) {</span>
+<span class="nc" id="L44">            e.printStackTrace();</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Deserializa un objeto desde el archivo XML especificado.
+     *
+     * @return Objeto deserializado (instancia de Residencia) o null si hay error.
+     */
+    @Override
+    public Object leer() {
+<span class="fc" id="L55">        try (FileInputStream fis = new FileInputStream(archivoDatos)) {</span>
+<span class="fc" id="L56">            XStream xstream = new XStream(new DomDriver());</span>
+<span class="fc" id="L57">            xstream.addPermission(AnyTypePermission.ANY);</span>
+<span class="fc" id="L58">            return (Residencia) xstream.fromXML(fis);</span>
+<span class="nc" id="L59">        } catch (IOException e) {</span>
+<span class="nc" id="L60">            e.printStackTrace();</span>
+<span class="nc" id="L61">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion04.list.linkedlist</a> &gt; <span class="el_source">LinkedList.java</span></div><h1>LinkedList.java</h1><pre class="source lang-java linenums">package org.mp.sesion04.list.linkedlist;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import org.mp.sesion04.list.AbstractList;
+/**
+ * {@code LinkedList&lt;E&gt;} es una implementación de la interfaz {@link org.mp.sesion04.list.List}
+ * que utiliza una lista doblemente enlazada para almacenar los elementos. Esto permite
+ * una inserción y eliminación eficientes de elementos en cualquier posición de la lista.
+ * Hereda de la clase abstracta {@link AbstractList}, proporcionando implementaciones
+ * específicas para las operaciones de lista basadas en una estructura enlazada.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta lista.
+ */
+public class LinkedList&lt;E&gt; extends AbstractList&lt;E&gt; {
+	private Node&lt;E&gt; head, tail;
+
+	/**
+	 * Crea una lista enlazada vacía.
+	 */
+<span class="fc" id="L22">	public LinkedList() {</span>
+<span class="fc" id="L23">	}</span>
+
+	/**
+	 * Crea una lista enlazada e inicializa sus elementos a partir de los elementos de un array dado.
+	 *
+	 * @param objects El array de objetos cuyos elementos se añadirán a la nueva lista.
+	 */
+	public LinkedList(E[] objects) {
+<span class="fc" id="L31">		super(objects);</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * Compara esta lista enlazada con otro objeto para determinar si son iguales.
+	 * Dos listas enlazadas son iguales si tienen el mismo tamaño y contienen los mismos
+	 * elementos en el mismo orden.
+	 *
+	 * @param obj El objeto con el que se va a comparar esta lista.
+	 * @return {@code true} si el objeto especificado es igual a esta lista, {@code false} en caso contrario.
+	 */
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(this == obj) return true;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if(obj == null) return false;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if(this.getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L46">		LinkedList&lt;E&gt; otro = (LinkedList&lt;E&gt;) obj;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		if(this.size() != otro.size()) return false;</span>
+<span class="fc" id="L48">		Node&lt;E&gt; temp1 = this.head;</span>
+<span class="fc" id="L49">		Node&lt;E&gt; temp2 = otro.head;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		while(temp1 != null) {</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">			if(!temp1.element.equals(temp2.element)) return false;</span>
+<span class="fc" id="L52">			temp1 = temp1.next;</span>
+<span class="fc" id="L53">			temp2 = temp2.next;</span>
+		}
+<span class="fc" id="L55">		return true;</span>
+	}
+
+	/**
+	 * Devuelve el primer elemento de la lista.
+	 *
+	 * @return El primer elemento de la lista, o {@code null} si la lista está vacía.
+	 */
+	public E getFirst() {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if(head != null) return head.element;</span>
+<span class="fc" id="L65">		return null;</span>
+	}
+
+	/**
+	 * Devuelve el último elemento de la lista.
+	 *
+	 * @return El último elemento de la lista, o {@code null} si la lista está vacía.
+	 */
+	public E getLast() {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if(tail != null) return tail.element;</span>
+<span class="fc" id="L75">		return null;</span>
+	}
+
+	/**
+	 * Añade un nuevo elemento al principio de la lista.
+	 *
+	 * @param e El elemento que se va a añadir al principio de la lista.
+	 */
+	public void addFirst(E e) {
+<span class="fc" id="L84">		Node&lt;E&gt; nuevoNodo = new Node&lt;E&gt;(e); </span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (tail == null) { </span>
+<span class="fc" id="L86">			head = tail = nuevoNodo; </span>
+		} else {
+<span class="fc" id="L88">			nuevoNodo.next = head; </span>
+<span class="fc" id="L89">			head = nuevoNodo; </span>
+		} 
+<span class="fc" id="L91">		size++;</span>
+		
+		// HECHO
+		/*
+		 * Otra forma Podemos comprobar primero si la lista esta vacia Node&lt;E&gt; nuevoNodo
+		 * = new Node&lt;E&gt;(e); if (tail == null) { head = tail = nuevoNodo; } else {
+		 * nuevoNodo.next = head; head = nuevoNodo; } size++;
+		 */
+<span class="fc" id="L99">	}</span>
+	/**
+	 * Añade un nuevo elemento al final de la lista.
+	 *
+	 * @param e El elemento que se va a añadir al final de la lista.
+	 */
+	public void addLast(E e) {
+<span class="fc" id="L106">		Node&lt;E&gt; nuevoNodo = new Node&lt;E&gt;(e); </span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (tail == null) { </span>
+<span class="fc" id="L108">			head = tail = nuevoNodo; </span>
+		} else {
+<span class="fc" id="L110">			tail.next = nuevoNodo;</span>
+<span class="fc" id="L111">			tail = nuevoNodo;</span>
+		} 
+<span class="fc" id="L113">		size++;</span>
+
+<span class="fc" id="L115">	}</span>
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Añade un nuevo elemento en la posición especificada por el índice.
+	 * Si el índice es 0, el elemento se añade al principio.
+	 * Si el índice es igual o mayor que el tamaño actual, el elemento se añade al final.
+	 * Para otros índices, el elemento se inserta en la posición especificada.
+	 *
+	 * @param index El índice en el que se va a insertar el elemento (comenzando desde 0).
+	 * @param e     El elemento que se va a añadir a la lista.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt; size()}).
+	 */
+	public void add(int index, E e) {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if(index &lt;= 0) {</span>
+<span class="fc" id="L131">			addFirst(e);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		}else if(index &gt;= size) {</span>
+<span class="fc" id="L133">			addLast(e);</span>
+		}else {
+<span class="fc" id="L135">			Node&lt;E&gt; nuevoNodo = new Node&lt;&gt;(e);</span>
+<span class="fc" id="L136">			Node&lt;E&gt; temp = head;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			for (int i = 0; i &lt; index-1; i++) {</span>
+<span class="nc" id="L138">				temp = temp.next;</span>
+			}
+<span class="fc" id="L140">			nuevoNodo.next = temp.next;</span>
+<span class="fc" id="L141">			temp.next = nuevoNodo;</span>
+<span class="fc" id="L142">			size++;</span>
+		}
+<span class="fc" id="L144">	}</span>
+
+	/**
+	 * Elimina el primer nodo de la lista y devuelve el elemento contenido en el nodo eliminado.
+	 *
+	 * @return El elemento del primer nodo, o {@code null} si la lista está vacía.
+	 */
+	public E removeFirst() {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if(head != null) {</span>
+<span class="fc" id="L153">			E aux = head.element;</span>
+<span class="fc" id="L154">			head = head.next;</span>
+<span class="fc" id="L155">			size--;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			if(head == null) {</span>
+<span class="fc" id="L157">				tail = null;</span>
+			}
+<span class="fc" id="L159">			return aux;</span>
+		}
+<span class="fc" id="L161">		return null;</span>
+	}
+	/**
+	 * Elimina el último nodo de la lista y devuelve el elemento contenido en el nodo eliminado.
+	 *
+	 * @return El elemento del último nodo, o {@code null} si la lista está vacía.
+	 */
+	public E removeLast() {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if(tail != null) {</span>
+<span class="fc" id="L170">			E aux = tail.element;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if(size == 1) {</span>
+<span class="fc" id="L172">				head = null;</span>
+<span class="fc" id="L173">				tail = null;</span>
+			}else {
+<span class="fc" id="L175">				Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">				for (int i = 0; i &lt; size-2; i++) {</span>
+<span class="fc" id="L177">					temp = temp.next;</span>
+				}
+<span class="fc" id="L179">				temp.next = null;</span>
+<span class="fc" id="L180">				tail = temp;</span>
+			}
+<span class="fc" id="L182">			size--;</span>
+<span class="fc" id="L183">			return aux;</span>
+		}
+<span class="fc" id="L185">		return null;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina el elemento en la posición especificada por el índice y devuelve el elemento eliminado.
+	 *
+	 * @param index El índice del elemento que se va a borrar (comenzando desde 0).
+	 * @return El elemento que fue borrado de la lista.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt;= size()}).
+	 */
+	public E remove(int index) {
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if(index &lt;= 0) {</span>
+<span class="fc" id="L199">			return removeFirst();</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		}else if(index &gt;= size-1) {</span>
+<span class="fc" id="L201">			return removeLast();</span>
+		}else {
+<span class="fc" id="L203">			Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			for (int i = 0; i &lt; index-1; i++) {</span>
+<span class="fc" id="L205">				temp = temp.next;</span>
+			}
+<span class="fc" id="L207">			E aux = temp.next.element;</span>
+<span class="fc" id="L208">			temp.next = temp.next.next;</span>
+<span class="fc" id="L209">			size--;</span>
+<span class="fc" id="L210">			return aux;</span>
+		}
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve una representación en cadena de la lista, que consiste en una secuencia
+	 * de los elementos de la lista en el orden en que se encuentran, encerrados entre
+	 * corchetes (&quot;[]&quot;). Los elementos adyacentes están separados por una coma y un espacio.
+	 */
+	@Override /** Sobre-escribe toString() */
+	public String toString() {
+		// [A, B, C, D]
+<span class="fc" id="L223">		StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
+<span class="fc" id="L224">		Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">		while(temp != null) {</span>
+<span class="fc" id="L226">			sb.append(temp.element);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">			if(temp.next != null) {</span>
+<span class="fc" id="L228">				sb.append(&quot;, &quot;);</span>
+			}
+<span class="fc" id="L230">			temp = temp.next;</span>
+		}
+<span class="fc" id="L232">		return sb.toString() + &quot;]&quot;;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina todos los elementos de la lista, dejándola vacía.
+	 */
+	public void clear() {
+<span class="fc" id="L240">		size = 0;</span>
+<span class="fc" id="L241">		head = tail = null;</span>
+<span class="fc" id="L242">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve {@code true} si la lista contiene el elemento especificado.
+	 *
+	 * @param e El elemento cuya presencia en la lista se va a verificar.
+	 * @return {@code true} si la lista contiene el elemento {@code e}, {@code false} en caso contrario.
+	 */
+	/** Devuelve true si la lista contiene el elemento e */
+	public boolean contains(E e) {
+<span class="fc" id="L253">		Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		while (temp != null) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">			if(temp.element.equals(e)) return true;</span>
+<span class="fc" id="L256">			temp = temp.next;</span>
+		}
+<span class="fc" id="L258">		return false;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el elemento de la lista que se encuentra en la posición especificada por el índice.
+	 *
+	 * @param index El índice del elemento que se va a devolver (comenzando desde 0).
+	 * @return El elemento en la posición especificada por el índice.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt;= size()}).
+	 */
+	/** Devuelve el elemento especificado por la posicion index */
+	public E get(int index) {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		if(index &lt;= 0) return getFirst();</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		if(index &gt;= size-1) return getLast();</span>
+<span class="fc" id="L273">		Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		for (int i = 0; i &lt; index; i++) {</span>
+<span class="fc" id="L275">			temp = temp.next;</span>
+		}
+<span class="fc" id="L277">		return temp.element;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el índice de la primera ocurrencia del elemento especificado en la lista.
+	 *
+	 * @param e El elemento cuyo índice se va a buscar.
+	 * @return El índice de la primera ocurrencia del elemento {@code e} en la lista, o -1 si el elemento no está presente.
+	 */
+	
+	public int indexOf(E e) {
+<span class="fc" id="L289">		Node&lt;E&gt; temp = head;</span>
+<span class="fc" id="L290">		int pos = -1;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		while(temp != null) {</span>
+<span class="fc" id="L292">			pos++;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			if(temp.element.equals(e)) return pos;</span>
+<span class="fc" id="L294">			temp = temp.next;</span>
+		}
+<span class="fc" id="L296">		return -1;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el índice de la última ocurrencia del elemento especificado en la lista.
+	 *
+	 * @param e El elemento cuyo último índice se va a buscar.
+	 * @return El índice de la última ocurrencia del elemento {@code e} en la lista, o -1 si el elemento no está presente.
+	 */
+	public int lastIndexOf(E e) {
+<span class="fc" id="L307">		Node&lt;E&gt; temp = head;</span>
+<span class="fc" id="L308">		int pos = -1;</span>
+<span class="fc" id="L309">		int posUltima = -1;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		while(temp != null) {</span>
+<span class="fc" id="L311">			pos++;</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			if(temp.element.equals(e)) {</span>
+<span class="fc" id="L313">				posUltima = pos;</span>
+			}
+<span class="fc" id="L315">			temp = temp.next;</span>
+		}
+<span class="fc" id="L317">		return posUltima;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Sustituye el elemento en la posición especificada por el índice en la lista
+	 * con el elemento especificado y devuelve el elemento que estaba previamente en esa posición.
+	 *
+	 * @param index El índice del elemento que se va a sustituir (comenzando desde 0).
+	 * @param e     El nuevo elemento que se va a almacenar en la lista.
+	 * @return El elemento que estaba previamente en la posición especificada por el índice, o {@code null} si el índice está fuera de rango.
+	 * @throws IndexOutOfBoundsException Si el índice está fuera del rango válido ({@code index &lt; 0 || index &gt;= size()}).
+	 */
+	public E set(int index, E e) {
+<span class="pc bpc" id="L332" title="1 of 4 branches missed.">		if(index &lt; 0 || index &gt;= size) return null;</span>
+<span class="fc" id="L333">		Node&lt;E&gt; temp = head;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		for (int i = 0; i &lt; index; i++) {</span>
+<span class="fc" id="L335">			temp = temp.next;</span>
+		}
+<span class="fc" id="L337">		E aux = temp.element;</span>
+<span class="fc" id="L338">		temp.element = e;</span>
+<span class="fc" id="L339">		return aux;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve un iterador sobre los elementos de esta lista en la secuencia apropiada.
+	 * El iterador proporcionado por esta clase permite la eliminación de elementos durante la iteración.
+	 */
+	@Override
+	/** Sobre-escribe iterator() definido en Iterable */
+	public Iterator&lt;E&gt; iterator() {
+<span class="fc" id="L350">		return new LinkedListIterator();</span>
+	}
+	/**
+	 * Clase interna que implementa la interfaz {@link Iterator} para la clase {@code LinkedList}.
+	 * Proporciona la funcionalidad para recorrer y eliminar elementos de la lista.
+	 */
+<span class="fc" id="L356">	private class LinkedListIterator implements Iterator&lt;E&gt; {</span>
+<span class="fc" id="L357">		private Node&lt;E&gt; current = head; // nodo current</span>
+<span class="fc" id="L358">		private Node&lt;E&gt; previous = null; // nodo previous</span>
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean hasNext() {
+<span class="fc bfc" id="L364" title="All 2 branches covered.">			return current != null;</span>
+		}
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @throws NoSuchElementException Si no hay más elementos para devolver.
+		 */
+		@Override
+		public E next() {
+<span class="fc bfc" id="L373" title="All 2 branches covered.">			if(!hasNext()) {</span>
+<span class="fc" id="L374">				throw new NoSuchElementException();</span>
+			}
+<span class="fc" id="L376">			E aux = current.element;</span>
+<span class="fc" id="L377">			previous = current;</span>
+<span class="fc" id="L378">			current = current.next;</span>
+<span class="fc" id="L379">			return aux;</span>
+		}
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @throws IllegalStateException Si este método se llama antes de {@link #next()} o si {@link #remove()} ya ha sido llamado después de la última llamada a {@code next()}.
+		 */
+		@Override
+		// elimina el ultimo elemento devuelto por el iterador.
+		public void remove() {
+<span class="fc bfc" id="L389" title="All 2 branches covered.">			if(previous == null) {</span>
+<span class="fc" id="L390">				throw new IllegalStateException();</span>
+			}
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">			if(previous == head) {</span>
+<span class="fc" id="L393">				head = current;</span>
+<span class="fc" id="L394">				previous = null;</span>
+			}else {
+<span class="nc" id="L396">				Node&lt;E&gt; temp = head;</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">				while(temp.next != previous) {</span>
+<span class="nc" id="L398">					temp = temp.next;</span>
+				}
+<span class="nc" id="L400">				temp.next = current;</span>
+<span class="nc" id="L401">				previous = temp;</span>
+			}
+<span class="fc" id="L403">			size--;</span>
+<span class="fc" id="L404">		}</span>
+	}
+	/**
+	 * Clase interna estática que representa un nodo en la lista enlazada.
+	 * Cada nodo contiene un elemento de tipo E y una referencia al siguiente nodo en la lista.
+	 */
+	private static class Node&lt;E&gt; {
+		E element;
+		Node&lt;E&gt; next;
+		/**
+		 * Crea un nuevo nodo con el elemento especificado.
+		 *
+		 * @param element El elemento que se almacenará en este nodo.
+		 */
+<span class="fc" id="L418">		public Node(E element) {</span>
+<span class="fc" id="L419">			this.element = element;</span>
+<span class="fc" id="L420">		}</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

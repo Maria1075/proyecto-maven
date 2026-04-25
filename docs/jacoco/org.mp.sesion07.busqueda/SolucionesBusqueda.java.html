@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolucionesBusqueda.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.busqueda</a> &gt; <span class="el_source">SolucionesBusqueda.java</span></div><h1>SolucionesBusqueda.java</h1><pre class="source lang-java linenums">/**
+ * Clase que implementa distintos algoritmos de búsqueda sobre una colección de datos ordenados.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.busqueda;
+
+import java.util.Arrays;
+
+<span class="nc" id="L12">public class SolucionesBusqueda {</span>
+
+    /**
+     * Realiza una búsqueda lineal sobre el arreglo.
+     *
+     * @param busqueda Objeto que contiene el arreglo y el número a buscar
+     * @return Índice del elemento encontrado
+     * @throws ElementoNoEncontradoException si el elemento no se encuentra
+     */
+    public static int busquedaLineal(Busqueda&lt;Integer&gt; busqueda) throws ElementoNoEncontradoException {
+<span class="fc" id="L22">        Comparable numBuscado = busqueda.getNumBuscado();</span>
+<span class="fc" id="L23">        Comparable[] array = busqueda.getDatos();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        for (int i = 0; i &lt; busqueda.getNumElementos(); i++) {</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (array[i] == numBuscado) {</span>
+<span class="fc" id="L26">                return i;</span>
+            }
+        }
+<span class="fc" id="L29">        throw new ElementoNoEncontradoException(&quot;Elemento &quot; + numBuscado + &quot; no encontrado en el array.&quot;);</span>
+    }
+
+    /**
+     * Realiza una búsqueda binaria iterativa sobre el arreglo ordenado.
+     *
+     * @param busqueda Objeto con el número buscado y los datos
+     * @return Índice del elemento encontrado
+     * @throws ElementoNoEncontradoException si el elemento no se encuentra
+     */
+    public static int busquedaBinariaIter(Busqueda&lt;Integer&gt; busqueda) throws ElementoNoEncontradoException {
+<span class="fc" id="L40">        Integer numBuscado = busqueda.getNumBuscado();</span>
+<span class="fc" id="L41">        Comparable[] array = busqueda.getDatos();</span>
+<span class="fc" id="L42">        int izq = 0;</span>
+<span class="fc" id="L43">        int der = array.length - 1;</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        while (izq &lt;= der) {</span>
+<span class="fc" id="L46">            int medio = izq + (der - izq) / 2;</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (array[medio] == numBuscado)</span>
+<span class="fc" id="L49">                return medio;</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if ((int) array[medio] &gt; numBuscado)</span>
+<span class="fc" id="L52">                der = medio - 1;</span>
+            else
+<span class="fc" id="L54">                izq = medio + 1;</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">        throw new ElementoNoEncontradoException(&quot;Elemento &quot; + numBuscado + &quot; no encontrado en el array.&quot;);</span>
+    }
+
+    /**
+     * Inicia una búsqueda binaria recursiva sobre el arreglo ordenado.
+     *
+     * @param busqueda Objeto con el número buscado y los datos
+     * @return Índice del elemento encontrado
+     * @throws ElementoNoEncontradoException si el elemento no se encuentra
+     */
+    public static int busquedaBinariaRec(Busqueda&lt;Integer&gt; busqueda) throws ElementoNoEncontradoException {
+<span class="fc" id="L67">        Integer numBuscado = busqueda.getNumBuscado();</span>
+<span class="fc" id="L68">        Comparable[] array = busqueda.getDatos();</span>
+<span class="fc" id="L69">        int izq = 0;</span>
+<span class="fc" id="L70">        int der = array.length - 1;</span>
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (izq &gt; der)</span>
+<span class="nc" id="L73">            throw new ElementoNoEncontradoException(&quot;Elemento &quot; + numBuscado + &quot; no encontrado en el array.&quot;);</span>
+
+<span class="fc" id="L75">        int medio = izq + (der - izq) / 2;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (array[medio] == numBuscado)</span>
+<span class="nc" id="L77">            return medio;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        else if ((int) array[medio] &gt; numBuscado)</span>
+<span class="nc" id="L79">            return busquedaBinariaRec(busqueda, izq, medio - 1);</span>
+        else
+<span class="fc" id="L81">            return busquedaBinariaRec(busqueda, medio + 1, der);</span>
+    }
+
+    /**
+     * Método recursivo auxiliar para búsqueda binaria.
+     */
+    private static int busquedaBinariaRec(Busqueda&lt;Integer&gt; busqueda, int izq, int der)
+            throws ElementoNoEncontradoException {
+
+<span class="fc" id="L90">        Integer numBuscado = busqueda.getNumBuscado();</span>
+<span class="fc" id="L91">        Comparable[] array = busqueda.getDatos();</span>
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (izq &gt; der)</span>
+<span class="fc" id="L94">            throw new ElementoNoEncontradoException(&quot;Elemento &quot; + numBuscado + &quot; no encontrado en el array.&quot;);</span>
+
+<span class="fc" id="L96">        int medio = izq + (der - izq) / 2;</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (array[medio] == numBuscado)</span>
+<span class="fc" id="L99">            return medio;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        else if ((int) array[medio] &gt; numBuscado)</span>
+<span class="fc" id="L101">            return busquedaBinariaRec(busqueda, izq, medio - 1);</span>
+        else
+<span class="nc" id="L103">            return busquedaBinariaRec(busqueda, medio + 1, der);</span>
+    }
+
+    /**
+     * Utiliza el método built-in de Java Arrays para realizar búsqueda binaria.
+     *
+     * @param busqueda Objeto que contiene los datos y el número a buscar
+     * @return Índice del elemento (o valor negativo si no se encuentra)
+     */
+    public static int busquedaArraysBinarySearch(Busqueda&lt;Integer&gt; busqueda) {
+<span class="fc" id="L113">        Integer numBuscado = busqueda.getNumBuscado();</span>
+<span class="fc" id="L114">        Comparable[] array = busqueda.getDatos();</span>
+<span class="fc" id="L115">        return Arrays.binarySearch(array, numBuscado);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

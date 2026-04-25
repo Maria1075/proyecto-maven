@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion04.list</a> &gt; <span class="el_source">AbstractList.java</span></div><h1>AbstractList.java</h1><pre class="source lang-java linenums">package org.mp.sesion04.list;
+/**
+ * La clase abstracta {@code AbstractList&lt;E&gt;} proporciona una implementación base
+ * para la interfaz {@link List}. Contiene la lógica común para todas las listas,
+ * como el seguimiento del tamaño y las implementaciones predeterminadas para algunos métodos.
+ * Las subclases concretas de {@code AbstractList} deben implementar los métodos restantes
+ * específicos de su estructura de datos subyacente.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta lista.
+ */
+public abstract class AbstractList&lt;E&gt; implements List&lt;E&gt; {
+	/**
+	 * El número actual de elementos en la lista.
+	 */
+<span class="fc" id="L15">	protected int size = 0; // Tamano de la lista</span>
+
+	/** Crea una lista por defecto */
+<span class="fc" id="L18">	protected AbstractList() {</span>
+<span class="fc" id="L19">	}</span>
+
+	/**
+	 * Crea una lista e inicializa sus elementos a partir de los elementos de un array dado.
+	 *
+	 * @param objects El array de objetos cuyos elementos se añadirán a la nueva lista.
+	 */
+<span class="fc" id="L26">	protected AbstractList(E[] objects) {</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		for (int i = 0; i &lt; objects.length; i++)</span>
+<span class="fc" id="L28">					add(objects[i]);</span>
+<span class="fc" id="L29">	}</span>
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Esta implementación añade el elemento especificado al final de la lista,
+	 * utilizando el método add(int, E) con el índice igual al tamaño actual.
+	 */
+	public void add(E e) {
+<span class="fc" id="L38">		add(size, e);</span>
+<span class="fc" id="L39">	}</span>
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Esta implementación devuelve {@code true} si el tamaño de la lista es cero.
+	 */
+	public boolean isEmpty() {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		return size == 0;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Esta implementación devuelve el valor del campo {@code size}, que representa
+	 * el número de elementos en la lista.
+	 */
+	public int size() {
+<span class="fc" id="L57">		return size;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Esta implementación borra la primera ocurrencia del elemento especificado de la lista.
+	 * Primero busca el índice del elemento utilizando {@link #indexOf(Object)}.
+	 * Si el elemento se encuentra (índice es mayor o igual a 0), llama a {@link #remove(int)}
+	 * para eliminar el elemento en esa posición y devuelve {@code true}.
+	 * Si el elemento no se encuentra, devuelve {@code false}.
+	 */
+	public boolean remove(E e) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (indexOf(e) &gt;= 0) {</span>
+<span class="nc" id="L71">			remove(indexOf(e));</span>
+<span class="nc" id="L72">			return true;</span>
+		} else
+<span class="nc" id="L74">			return false;</span>
+	}
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

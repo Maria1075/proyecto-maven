@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion05.colas</a> &gt; <span class="el_source">ArrayQueue.java</span></div><h1>ArrayQueue.java</h1><pre class="source lang-java linenums">package org.mp.sesion05.colas;
+/**
+ * {@code ArrayQueue&lt;E&gt;} es una implementación de la interfaz {@link Queue} que utiliza
+ * un array dinámico para almacenar los elementos de la cola. Permite operaciones
+ * de enqueue (añadir al final) y dequeue (eliminar del frente) con un posible
+ * redimensionamiento del array para acomodar un número creciente de elementos.
+ *
+ * @param &lt;E&gt; El tipo de los elementos que contendrá esta cola.
+ */
+public class ArrayQueue &lt;E&gt; implements Queue &lt;E&gt;{
+
+	private static final int INITIAL_CAPACITY = 16;
+	private Object[] arrayQueue;
+	private int front;
+	private int rear;
+	private int size;
+	/**
+	 * Constructor: Inicializa una nueva cola vacía con la capacidad inicial predeterminada (16 elementos).
+	 * Los índices {@code front} y {@code rear} se establecen en -1, y el tamaño en 0.
+	 */
+<span class="fc" id="L21">	public ArrayQueue() {</span>
+<span class="fc" id="L22">		this.arrayQueue = new Object[INITIAL_CAPACITY];</span>
+<span class="fc" id="L23">		this.front = -1;</span>
+<span class="fc" id="L24">		this.rear = -1;</span>
+<span class="fc" id="L25">		this.size = 0;</span>
+<span class="fc" id="L26">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Añade un elemento al final de la cola (operación enqueue).
+	 * Primero, verifica y expande la capacidad del array si es necesario.
+	 * Luego, añade el elemento en la siguiente posición disponible al final,
+	 * incrementa el tamaño y actualiza el índice {@code rear}. Si la cola estaba
+	 * vacía antes de la inserción, también inicializa el índice {@code front} a 0.
+	 *
+	 * @param e El elemento que se va a añadir a la cola.
+	 */
+	@Override
+	public void enqueue (E e) {
+<span class="fc" id="L40">		expandCapacity();</span>
+<span class="fc" id="L41">		arrayQueue[rear+1] = e;</span>
+<span class="fc" id="L42">		size++;</span>
+<span class="fc" id="L43">		rear++;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if(front ==-1) {</span>
+<span class="fc" id="L45">			front = 0;</span>
+		}
+<span class="fc" id="L47">	}</span>
+	/**
+	 * Expande la capacidad del array interno si es necesario.
+	 * Si el array está lleno (tamaño igual a la capacidad), crea un nuevo array
+	 * con el doble de la capacidad más 1 y copia los elementos del array antiguo al nuevo.
+	 * Si el índice {@code rear} está en la última posición del array pero aún hay espacio
+	 * al principio (debido a las operaciones de dequeue), crea un nuevo array del tamaño
+	 * actual de la cola, copia los elementos desde {@code front} hasta {@code rear}
+	 * al nuevo array comenzando desde el índice 0, y actualiza los índices {@code front}
+	 * a 0 y {@code rear} al último índice del nuevo array.
+	 */
+	private void expandCapacity() {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (size == arrayQueue.length) { //Completo</span>
+<span class="nc" id="L60">			Object[]aux = new Object [size * 2 + 1];</span>
+<span class="nc" id="L61">			System.arraycopy(arrayQueue, 0, aux, 0, size);</span>
+<span class="nc" id="L62">			arrayQueue = aux;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		} else if( rear + 1 == arrayQueue.length){</span>
+<span class="nc" id="L64">			Object[] aux = new Object [size];</span>
+<span class="nc" id="L65">			System.arraycopy(arrayQueue, front, aux, 0, size);</span>
+<span class="nc" id="L66">			arrayQueue = aux;</span>
+<span class="nc" id="L67">			front = 0;</span>
+<span class="nc" id="L68">			rear = size-1;</span>
+		}
+		
+<span class="fc" id="L71">	}</span>
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Elimina y devuelve el elemento del frente de la cola (operación dequeue).
+	 * Obtiene el elemento en el índice {@code front}, incrementa el índice {@code front}
+	 * para apuntar al siguiente elemento, y decrementa el tamaño de la cola.
+	 *
+	 * @return El elemento que estaba al frente de la cola.
+	 */
+	@Override
+	public E dequeue() {
+<span class="fc" id="L83">		E aux = (E) arrayQueue[front];</span>
+<span class="fc" id="L84">		front++;</span>
+<span class="fc" id="L85">		size--;</span>
+<span class="fc" id="L86">		return aux;</span>
+	}
+	/**
+	 * {@inheritDoc}
+	 * &lt;p&gt;
+	 * Devuelve el número de elementos que contiene la cola.
+	 *
+	 * @return El número de elementos en la cola.
+	 */
+	@Override
+	public int getSize() {
+<span class="fc" id="L97">		return size;</span>
+	}
+	@Override
+	public void remove(int index) {
+		// TODO Auto-generated method stub
+		
+<span class="nc" id="L103">	}</span>
+	@Override
+	public E get(int index) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L107">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

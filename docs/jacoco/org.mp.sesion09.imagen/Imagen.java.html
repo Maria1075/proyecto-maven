@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Imagen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.imagen</a> &gt; <span class="el_source">Imagen.java</span></div><h1>Imagen.java</h1><pre class="source lang-java linenums">/**
+ * Clase que representa una imagen compuesta por varias bandas (capas de datos).
+ * Permite acceder, modificar, extraer y gestionar bandas e información por píxel.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion09.imagen;
+
+import java.util.ArrayList;
+
+public class Imagen {
+
+	private String formatoImagen;
+	private String tipoImagen;
+	private int lineas;
+	private int columnas;
+<span class="fc" id="L19">	private ArrayList&lt;Banda&lt;?&gt;&gt; bandas = new ArrayList&lt;Banda&lt;?&gt;&gt;();</span>
+
+	/**
+	 * Constructor de la clase Imagen.
+	 *
+	 * @param lineas         Número de filas (alto)
+	 * @param columnas       Número de columnas (ancho)
+	 * @param formatoImagen  Formato (por ejemplo: JPG, PNG)
+	 * @param tipoImagen     Tipo (por ejemplo: RGB, IR)
+	 */
+<span class="fc" id="L29">	public Imagen(int lineas, int columnas, String formatoImagen, String tipoImagen) {</span>
+<span class="fc" id="L30">		this.lineas = lineas;</span>
+<span class="fc" id="L31">		this.columnas = columnas;</span>
+<span class="fc" id="L32">		this.formatoImagen = formatoImagen;</span>
+<span class="fc" id="L33">		this.tipoImagen = tipoImagen;</span>
+<span class="fc" id="L34">	}</span>
+
+	/**
+	 * Retorna los valores de todas las bandas en un píxel (x, y).
+	 *
+	 * @param x Fila
+	 * @param y Columna
+	 * @return Array de números correspondientes a cada banda en (x, y)
+	 */
+	public Number[] getDatosPixel(int x, int y) {
+<span class="fc" id="L44">		Number[] datosPixel = new Number[bandas.size()];</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int i = 0; i &lt; bandas.size(); i++) {</span>
+<span class="fc" id="L46">			Banda&lt;?&gt; banda = bandas.get(i);</span>
+<span class="fc" id="L47">			datosPixel[i] = banda.getDatoXY(x, y);</span>
+		}
+<span class="fc" id="L49">		return datosPixel;</span>
+	}
+
+	/**
+	 * Extrae una subimagen rectangular desde (x1, y1) hasta (x2, y2).
+	 *
+	 * @param x1 Coordenada inicial x
+	 * @param y1 Coordenada inicial y
+	 * @param x2 Coordenada final x
+	 * @param y2 Coordenada final y
+	 * @return Imagen nueva correspondiente a la subregión
+	 * @throws XYFueraImagenException Si alguna coordenada está fuera de los límites de la imagen
+	 */
+	public Imagen extraerImagen(int x1, int y1, int x2, int y2) throws XYFueraImagenException {
+<span class="pc bpc" id="L63" title="7 of 16 branches missed.">		if (x1 &gt; columnas || x2 &gt; columnas || y1 &gt; lineas || y2 &gt; lineas || x1 &lt; 0 || x2 &lt; 0 || y1 &lt; 0 || y2 &lt; 0)</span>
+<span class="fc" id="L64">			throw new XYFueraImagenException();</span>
+
+<span class="fc" id="L66">		Imagen subImagen = new Imagen(x2 - x1 + 1, y2 - y1 + 1, formatoImagen, tipoImagen);</span>
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (Banda&lt;?&gt; banda : bandas) {</span>
+<span class="fc" id="L69">			Number[][] datosBanda = banda.getDatos();</span>
+<span class="fc" id="L70">			Number[][] datosSubBanda = new Number[x2 - x1 + 1][y2 - y1 + 1];</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			for (int i = x1; i &lt;= x2; i++) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">				for (int j = y1; j &lt;= y2; j++) {</span>
+<span class="fc" id="L73">					datosSubBanda[i - x1][j - y1] = datosBanda[i][j];</span>
+				}
+			}
+<span class="fc" id="L76">			Banda&lt;Number&gt; subBanda = new Banda&lt;&gt;(banda.getNombreBanda(), datosSubBanda);</span>
+<span class="fc" id="L77">			subImagen.anadirBanda(subBanda);</span>
+<span class="fc" id="L78">		}</span>
+
+<span class="fc" id="L80">		return subImagen;</span>
+	}
+
+	/**
+	 * Añade una nueva banda a la imagen.
+	 *
+	 * @param banda Banda a añadir
+	 */
+	public void anadirBanda(Banda&lt;?&gt; banda) {
+<span class="fc" id="L89">		bandas.add(banda);</span>
+<span class="fc" id="L90">	}</span>
+
+	/**
+	 * Elimina una banda por índice.
+	 *
+	 * @param i Índice de la banda a eliminar
+	 */
+	public void eliminarBanda(int i) {
+<span class="fc" id="L98">		bandas.remove(i);</span>
+<span class="fc" id="L99">	}</span>
+
+	/**
+	 * Obtiene una banda por índice.
+	 *
+	 * @param i Índice
+	 * @return Banda correspondiente
+	 */
+	public Banda&lt;?&gt; getBanda(int i) {
+<span class="nc" id="L108">		return bandas.get(i);</span>
+	}
+
+	/**
+	 * Devuelve la lista de bandas de la imagen.
+	 *
+	 * @return Lista de bandas
+	 */
+	public ArrayList&lt;Banda&lt;?&gt;&gt; getBandas() {
+<span class="fc" id="L117">		return bandas;</span>
+	}
+
+	/**
+	 * Reemplaza todas las bandas de la imagen.
+	 *
+	 * @param bandas Lista de nuevas bandas
+	 */
+	public void setBandas(ArrayList&lt;Banda&lt;?&gt;&gt; bandas) {
+<span class="nc" id="L126">		this.bandas = bandas;</span>
+<span class="nc" id="L127">	}</span>
+
+	/**
+	 * @return Número de bandas actuales
+	 */
+	public int getNumeroBandas() {
+<span class="fc" id="L133">		return bandas.size();</span>
+	}
+
+	/**
+	 * @return Número de líneas (alto)
+	 */
+	public int getLineas() {
+<span class="fc" id="L140">		return lineas;</span>
+	}
+
+	/**
+	 * @return Número de columnas (ancho)
+	 */
+	public int getColumnas() {
+<span class="fc" id="L147">		return columnas;</span>
+	}
+
+	/**
+	 * @return Formato de imagen (por ejemplo, PNG)
+	 */
+	public String getFormatoImagen() {
+<span class="fc" id="L154">		return formatoImagen;</span>
+	}
+
+	/**
+	 * Establece el formato de la imagen.
+	 *
+	 * @param formatoImagen Formato a asignar
+	 */
+	public void setFormatoImagen(String formatoImagen) {
+<span class="nc" id="L163">		this.formatoImagen = formatoImagen;</span>
+<span class="nc" id="L164">	}</span>
+
+	/**
+	 * @return Tipo de imagen (por ejemplo, RGB)
+	 */
+	public String getTipoImagen() {
+<span class="fc" id="L170">		return tipoImagen;</span>
+	}
+
+	/**
+	 * Establece el tipo de imagen.
+	 *
+	 * @param tipoImagen Tipo a asignar
+	 */
+	public void setTipoImagen(String tipoImagen) {
+<span class="fc" id="L179">		this.tipoImagen = tipoImagen;</span>
+<span class="fc" id="L180">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

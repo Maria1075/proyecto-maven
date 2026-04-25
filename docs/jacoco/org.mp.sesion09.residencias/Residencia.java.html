@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Residencia.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion09.residencias</a> &gt; <span class="el_source">Residencia.java</span></div><h1>Residencia.java</h1><pre class="source lang-java linenums">/**
+ * Clase que representa una Residencia con sus residentes, habitaciones y reservas.
+ * Permite gestionar ingresos, salidas, cambios de habitación y listados varios.
+ * 
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion09.residencias;
+
+import java.util.List;
+import java.util.Map;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+
+public class Residencia implements Serializable {
+
+    private String nombre;
+<span class="pc" id="L21">    private List&lt;Residente&gt; residentes = new ArrayList&lt;Residente&gt;();</span>
+<span class="pc" id="L22">    private List&lt;Habitacion&gt; habitaciones = new ArrayList&lt;Habitacion&gt;();</span>
+<span class="pc" id="L23">    private List&lt;Reserva&gt; reservas = new ArrayList&lt;Reserva&gt;();</span>
+
+    /**
+     * Constructor de residencia con solo nombre.
+     * 
+     * @param nombre Nombre de la residencia.
+     */
+<span class="nc" id="L30">    public Residencia(String nombre) {</span>
+<span class="nc" id="L31">        this.nombre = nombre;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Constructor con habitaciones iniciales.
+     * 
+     * @param nombre       Nombre de la residencia.
+     * @param habitaciones Array de habitaciones a agregar.
+     */
+<span class="fc" id="L40">    public Residencia(String nombre, Habitacion[] habitaciones) {</span>
+<span class="fc" id="L41">        this.nombre = nombre;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (int i = 0; i &lt; habitaciones.length; i++) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            if (habitaciones[i] != null)</span>
+<span class="fc" id="L44">                this.habitaciones.add(habitaciones[i]);</span>
+        }
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Registra un ingreso de un residente a una habitación.
+     * 
+     * @param residente    Residente que se desea ingresar.
+     * @param habitacion   Habitación que se asigna.
+     * @param fechaInicio  Fecha de inicio de la reserva.
+     * @param fechaFin     Fecha de fin de la reserva.
+     */
+    public void ingreso(Residente residente, Habitacion habitacion, Date fechaInicio, Date fechaFin) {
+<span class="fc bfc" id="L57" title="All 4 branches covered.">        if (isHabitacionOcupada(habitacion, fechaInicio) || residentes.contains(residente)</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                || fechaFin.before(fechaInicio))</span>
+<span class="fc" id="L59">            return;</span>
+<span class="fc" id="L60">        insertarResidente(residente);</span>
+<span class="fc" id="L61">        insertarHabitacion(habitacion);</span>
+<span class="fc" id="L62">        reservas.add(new Reserva(residente, habitacion, fechaInicio, fechaFin));</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Registra la salida de un residente en una fecha determinada.
+     * 
+     * @param residente Residente que se va.
+     * @param fecha     Fecha de salida.
+     */
+    public void salida(Residente residente, Date fecha) {
+<span class="fc" id="L72">        residentes.remove(residente);</span>
+<span class="fc" id="L73">        Iterator&lt;Reserva&gt; iterator = reservas.iterator();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L75">            Reserva reserva = iterator.next();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (reserva.getResidente().equals(residente)) {</span>
+<span class="fc" id="L77">                reserva.setFechaFin(fecha);</span>
+            }
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Verifica si una habitación está ocupada en una fecha dada.
+     * 
+     * @param habitacion Habitación a verificar.
+     * @param fecha      Fecha específica.
+     * @return true si está ocupada, false si está libre.
+     */
+    public boolean isHabitacionOcupada(Habitacion habitacion, Date fecha) {
+<span class="fc" id="L90">        Iterator&lt;Reserva&gt; iterator = reservas.iterator();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L92">            Reserva reserva = iterator.next();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            if (reserva.getHabitacion().equals(habitacion)</span>
+<span class="fc bfc" id="L94" title="All 4 branches covered.">                    &amp;&amp; (fecha.equals(reserva.getFechaInicio()) || fecha.equals(reserva.getFechaFin())</span>
+<span class="fc bfc" id="L95" title="All 4 branches covered.">                            || (fecha.after(reserva.getFechaInicio()) &amp;&amp; fecha.before(reserva.getFechaFin())))) {</span>
+<span class="fc" id="L96">                return true;</span>
+            }
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        return false;</span>
+    }
+
+    /**
+     * Busca una habitación por su número.
+     * 
+     * @param numero Número de habitación.
+     * @return Habitación encontrada o null si no existe.
+     */
+    public Habitacion buscarHabitacion(String numero) {
+<span class="fc" id="L109">        Iterator&lt;Habitacion&gt; iterator = habitaciones.iterator();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L111">            Habitacion habitacion = iterator.next();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (habitacion.getNumero() == numero)</span>
+<span class="fc" id="L113">                return habitacion;</span>
+<span class="fc" id="L114">        }</span>
+<span class="fc" id="L115">        return null;</span>
+    }
+
+    /**
+     * Inserta un residente si no existe ya.
+     * 
+     * @param residente Residente a insertar.
+     * @return true si se insertó, false si ya existía.
+     */
+    public boolean insertarResidente(Residente residente) {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (residentes.contains(residente))</span>
+<span class="nc" id="L126">            return false;</span>
+<span class="fc" id="L127">        return residentes.add(residente);</span>
+    }
+
+    /**
+     * Inserta una habitación si no existe ya.
+     * 
+     * @param habitacion Habitación a insertar.
+     */
+    public void insertarHabitacion(Habitacion habitacion) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (habitaciones.contains(habitacion))</span>
+<span class="fc" id="L137">            return;</span>
+<span class="fc" id="L138">        Iterator&lt;Habitacion&gt; iterator = habitaciones.iterator();</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L140">            String numero = iterator.next().getNumero();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            if (numero == habitacion.getNumero())</span>
+<span class="fc" id="L142">                return;</span>
+<span class="fc" id="L143">        }</span>
+<span class="fc" id="L144">        habitaciones.add(habitacion);</span>
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * Cambia un residente de habitación.
+     * 
+     * @param residente       Residente a cambiar.
+     * @param nuevaHabitacion Nueva habitación asignada.
+     * @param fechaInicio     Fecha de inicio de la nueva reserva.
+     * @param fechaFin        Fecha de fin de la nueva reserva.
+     */
+    public void cambiarHabitacion(Residente residente, Habitacion nuevaHabitacion, Date fechaInicio, Date fechaFin) {
+<span class="fc" id="L156">        reservas.add(new Reserva(residente, nuevaHabitacion, fechaInicio, fechaFin));</span>
+<span class="fc" id="L157">    }</span>
+
+    /**
+     * Genera un listado de residentes con sus habitaciones en una fecha dada.
+     * 
+     * @param fecha Fecha consultada.
+     * @return String con el listado.
+     */
+    public String listadoResidentesHabitaciones(Date fecha) {
+<span class="fc" id="L166">        Reserva[] reservas = getReservas();</span>
+<span class="fc" id="L167">        StringBuffer salida = new StringBuffer(&quot;&quot;);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        for (int i = 0; i &lt; reservas.length; i++) {</span>
+<span class="fc" id="L169">            Date fechaInicio = reservas[i].getFechaInicio(), fechaFin = reservas[i].getFechaFin();</span>
+<span class="fc bfc" id="L170" title="All 6 branches covered.">            if ((fecha.after(fechaInicio) &amp;&amp; fecha.before(fechaFin)) || fecha.equals(fechaInicio)</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                    || fecha.equals(fechaFin)) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">                if (salida.isEmpty() || reservas[i].getResidente().getNombre()</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">                        .compareToIgnoreCase(reservas[i - 1].getResidente().getNombre()) &gt; 0) {</span>
+<span class="fc" id="L174">                    salida.append(&quot;Habitacion &quot; + reservas[i].getHabitacion().getNumero() + &quot;: &quot;</span>
+<span class="fc" id="L175">                            + reservas[i].getResidente().getNombre() + &quot;\n&quot;);</span>
+<span class="fc" id="L176">                    continue;</span>
+                }
+<span class="fc" id="L178">                if (reservas[i].getResidente().getNombre()</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                        .compareToIgnoreCase(reservas[i - 1].getResidente().getNombre()) &lt; 0) {</span>
+<span class="fc" id="L180">                    salida.insert(0, &quot;Habitacion &quot; + reservas[i].getHabitacion().getNumero() + &quot;: &quot;</span>
+<span class="fc" id="L181">                            + reservas[i].getResidente().getNombre() + &quot;\n&quot;);</span>
+<span class="fc" id="L182">                    continue;</span>
+                }
+            }
+        }
+<span class="fc" id="L186">        return salida.toString();</span>
+    }
+
+    /**
+     * Lista habitaciones libres en una fecha dada.
+     * 
+     * @param fecha Fecha consultada.
+     * @return String con las habitaciones libres.
+     */
+    public String listadoHabitacionesLibres(Date fecha) {
+<span class="fc" id="L196">        Reserva[] reservas = getReservas();</span>
+<span class="fc" id="L197">        StringBuffer salida = new StringBuffer(&quot;&quot;);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        for (int i = 0; i &lt; reservas.length; i++) {</span>
+<span class="fc" id="L199">            Date fechaInicio = reservas[i].getFechaInicio(), fechaFin = reservas[i].getFechaFin();</span>
+<span class="pc bpc" id="L200" title="1 of 6 branches missed.">            if (!((fecha.after(fechaInicio) &amp;&amp; fecha.before(fechaFin)) || fecha.equals(fechaInicio)</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                    || fecha.equals(fechaFin))) {</span>
+<span class="fc" id="L202">                salida.append(&quot;Habitacion &quot; + reservas[i].getHabitacion().getNumero());</span>
+            }
+        }
+<span class="fc" id="L205">        return salida.toString();</span>
+    }
+
+    /**
+     * Calcula la edad media de residentes por sexo en una fecha dada.
+     * 
+     * @param fecha Fecha consultada.
+     * @return String con el informe de edad media por sexo.
+     */
+    public String listadoEdadMediaPorSexo(Date fecha) {
+<span class="fc" id="L215">        Reserva[] reservas = getReservas();</span>
+<span class="fc" id="L216">        String formato = &quot;Listado de edad media por sexo:\n&quot; + &quot;Edad hombres   Edad mujeres\n&quot;;</span>
+<span class="fc" id="L217">        StringBuffer salida = new StringBuffer(formato);</span>
+<span class="fc" id="L218">        double sumaEdadesHombres = 0.0;</span>
+<span class="fc" id="L219">        double sumaEdadesMujeres = 0.0;</span>
+<span class="fc" id="L220">        double mediaEdadHombres = 0.0;</span>
+<span class="fc" id="L221">        double mediaEdadMujeres = 0.0;</span>
+<span class="fc" id="L222">        int numeroHombres = 0;</span>
+<span class="fc" id="L223">        int numeroMujeres = 0;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (Reserva reserva : reservas) {</span>
+<span class="fc" id="L225">            Residente residente = reserva.getResidente();</span>
+<span class="fc" id="L226">            int edad = residente.getEdad(fecha);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (residente.getSexo() == 'V') {</span>
+<span class="fc" id="L228">                sumaEdadesHombres += edad;</span>
+<span class="fc" id="L229">                numeroHombres++;</span>
+            } else {
+<span class="fc" id="L231">                sumaEdadesMujeres += edad;</span>
+<span class="fc" id="L232">                numeroMujeres++;</span>
+            }
+        }
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (numeroHombres != 0)</span>
+<span class="fc" id="L236">            mediaEdadHombres = sumaEdadesHombres / numeroHombres;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">        if (numeroMujeres != 0)</span>
+<span class="fc" id="L238">            mediaEdadMujeres = sumaEdadesMujeres / numeroMujeres;</span>
+<span class="fc" id="L239">        salida.append(mediaEdadHombres + &quot;\t\t\t&quot;);</span>
+<span class="fc" id="L240">        salida.append(mediaEdadMujeres + &quot; &quot;);</span>
+<span class="fc" id="L241">        return salida.toString();</span>
+    }
+
+    /**
+     * @return Array de habitaciones.
+     */
+    public Habitacion[] getHabitaciones() {
+<span class="fc" id="L248">        Habitacion[] arrayHabitaciones = new Habitacion[habitaciones.size()];</span>
+<span class="fc" id="L249">        Iterator&lt;Habitacion&gt; iterator = habitaciones.iterator();</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        for (int i = 0; i &lt; arrayHabitaciones.length; i++) {</span>
+<span class="fc" id="L251">            arrayHabitaciones[i] = iterator.next();</span>
+        }
+<span class="fc" id="L253">        return arrayHabitaciones;</span>
+    }
+
+    /**
+     * @return Nombre de la residencia.
+     */
+    public String getNombre() {
+<span class="fc" id="L260">        return this.nombre;</span>
+    }
+
+    /**
+     * @return Array de reservas.
+     */
+    public Reserva[] getReservas() {
+<span class="fc" id="L267">        Reserva[] arrayReservas = new Reserva[reservas.size()];</span>
+<span class="fc" id="L268">        Iterator&lt;Reserva&gt; iterator = reservas.iterator();</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        for (int i = 0; i &lt; arrayReservas.length; i++) {</span>
+<span class="fc" id="L270">            arrayReservas[i] = iterator.next();</span>
+        }
+<span class="fc" id="L272">        return arrayReservas;</span>
+    }
+
+    /**
+     * @return Número total de habitaciones.
+     */
+    public int getNHabitaciones() {
+<span class="fc" id="L279">        return habitaciones.size();</span>
+    }
+
+    /**
+     * @return Número total de residentes.
+     */
+    public int getNResidentes() {
+<span class="fc" id="L286">        return residentes.size();</span>
+    }
+
+    /**
+     * @return Número total de reservas.
+     */
+    public int getNReservas() {
+<span class="fc" id="L293">        return reservas.size();</span>
+    }
+
+    /**
+     * Elimina una habitación de la residencia.
+     * 
+     * @param habitacion Habitación a eliminar.
+     */
+    public void eliminarHabitacion(Habitacion habitacion) {
+<span class="fc" id="L302">        habitaciones.remove(habitacion);</span>
+<span class="fc" id="L303">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

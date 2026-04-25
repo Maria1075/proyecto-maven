@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VolumenComparator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.comparator</a> &gt; <span class="el_source">VolumenComparator.java</span></div><h1>VolumenComparator.java</h1><pre class="source lang-java linenums">/**
+ * Comparador de objetos {@link Accion} basado en el volumen de negociación.
+ * Ordena de menor a mayor volumen.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.comparator;
+
+import java.util.Comparator;
+
+<span class="nc" id="L13">public class VolumenComparator implements Comparator&lt;Accion&gt; {</span>
+
+	/**
+	 * Compara dos acciones según su volumen de negociación.
+	 *
+	 * @param a1 Primera acción
+	 * @param a2 Segunda acción
+	 * @return -1 si a1 es menor que a2, 1 si a1 es mayor que a2, 0 si son iguales
+	 */
+	@Override
+	public int compare(Accion a1, Accion a2) {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">		if (a1.getVolumen() &gt; a2.getVolumen())</span>
+<span class="nc" id="L25">			return 1;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">		else if (a1.getVolumen() &lt; a2.getVolumen())</span>
+<span class="nc" id="L27">			return -1;</span>
+		else
+<span class="nc" id="L29">			return 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

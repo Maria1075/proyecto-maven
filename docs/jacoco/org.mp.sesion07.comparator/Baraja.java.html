@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Baraja.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion07.comparator</a> &gt; <span class="el_source">Baraja.java</span></div><h1>Baraja.java</h1><pre class="source lang-java linenums">/**
+ * Clase que representa una baraja de cartas. Permite listar, ordenar, barajar y buscar cartas.
+ *
+ * Autor: Maria Camila Soto Zapata
+ * Año: 2025
+ */
+
+package org.mp.sesion07.comparator;
+
+import java.util.Random;
+
+public class Baraja {
+
+	private String nombreBaraja;   // Nombre de la baraja (ej. &quot;Baraja Española&quot;)
+	private Carta[] cartas;        // Array de cartas que componen la baraja
+
+	/**
+	 * Constructor de la clase Baraja.
+	 *
+	 * @param nombreBaraja Nombre asignado a la baraja
+	 * @param cartas Arreglo de cartas que componen la baraja
+	 */
+	public Baraja(String nombreBaraja, Carta[] cartas) {
+<span class="fc" id="L24">		super();</span>
+<span class="fc" id="L25">		this.nombreBaraja = nombreBaraja;</span>
+<span class="fc" id="L26">		this.cartas = cartas;</span>
+<span class="fc" id="L27">	}</span>
+
+	/** @return Nombre de la baraja */
+	public String getNombreBaraja() {
+<span class="nc" id="L31">		return nombreBaraja;</span>
+	}
+
+	/** @param nombreBaraja Nuevo nombre para la baraja */
+	public void setNombreBaraja(String nombreBaraja) {
+<span class="nc" id="L36">		this.nombreBaraja = nombreBaraja;</span>
+<span class="nc" id="L37">	}</span>
+
+	/** @return Arreglo de cartas de la baraja */
+	public Carta[] getCartas() {
+<span class="fc" id="L41">		return cartas;</span>
+	}
+
+	/** @param cartas Nuevo arreglo de cartas */
+	public void setCartas(Carta[] cartas) {
+<span class="nc" id="L46">		this.cartas = cartas;</span>
+<span class="nc" id="L47">	}</span>
+
+	/**
+	 * Muestra por consola todas las cartas de la baraja en orden actual.
+	 */
+	public void listadoBaraja() {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		for (int i = 0; i &lt; cartas.length; i++) {</span>
+<span class="nc" id="L54">			System.out.println(cartas[i].getPalo() + &quot; &quot; + cartas[i].getNumero());</span>
+		}
+<span class="nc" id="L56">	}</span>
+
+	/**
+	 * Busca una carta específica dentro de la baraja.
+	 *
+	 * @param carta Carta a buscar
+	 * @return La carta si se encuentra, null en caso contrario
+	 */
+	public Carta buscarCarta(Carta carta) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (int i = 0; i &lt; cartas.length; i++) {</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (cartas[i].equals(carta)) {</span>
+<span class="nc" id="L67">				return cartas[i];</span>
+			}
+		}
+<span class="nc" id="L70">		return null;</span>
+	}
+
+	/**
+	 * Ordena la baraja usando orden natural (según compareTo de Carta).
+	 * Implementa ordenación por inserción.
+	 */
+	public void ordenarBaraja() {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (int p = 1; p &lt; cartas.length; p++) {</span>
+<span class="nc" id="L79">			int j = p;</span>
+<span class="nc" id="L80">			Carta tmp = cartas[p];</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">			for (; j &gt; 0 &amp;&amp; tmp.compareTo(cartas[j - 1]) &lt; 0; j--) {</span>
+<span class="nc" id="L82">				cartas[j] = cartas[j - 1];</span>
+			}
+<span class="nc" id="L84">			cartas[j] = tmp;</span>
+		}
+<span class="nc" id="L86">	}</span>
+
+	/**
+	 * Baraja aleatoriamente las cartas realizando múltiples intercambios al azar.
+	 */
+	public void barajar() {
+<span class="nc" id="L92">		Random rand = new Random();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (int i = 0; i &lt; 160; i++) {</span>
+<span class="nc" id="L94">			int x = rand.nextInt(40); // índice aleatorio 1</span>
+<span class="nc" id="L95">			int y = rand.nextInt(40); // índice aleatorio 2</span>
+
+<span class="nc" id="L97">			Carta swap = cartas[x];</span>
+<span class="nc" id="L98">			cartas[x] = cartas[y];</span>
+<span class="nc" id="L99">			cartas[y] = swap;</span>
+		}
+<span class="nc" id="L101">	}</span>
+
+	/**
+	 * Representación textual de la baraja (pendiente de implementación personalizada).
+	 */
+	@Override
+	public String toString() {
+		// Implementación personalizada sugerida
+<span class="nc" id="L109">		return super.toString(); // Actualmente devuelve el toString() de Object</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

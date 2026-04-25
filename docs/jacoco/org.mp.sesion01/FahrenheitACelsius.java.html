@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FahrenheitACelsius.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion01</a> &gt; <span class="el_source">FahrenheitACelsius.java</span></div><h1>FahrenheitACelsius.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @sinse 2025
+ */
+package org.mp.sesion01;
+
+/**
+ * La clase FahrenheitACelsius proporciona un metodo para convertir temperaturas de Fahrenheit a Celsius.
+ *
+ * Esta clase es util para realizar conversiones de temperatura entre las escalas Fahrenheit y Celsius.
+ * Ademas, maneja la restriccion de que la temperatura no puede estar por debajo del cero absoluto (-459.67 °F).
+ */
+<span class="fc" id="L13">public class FahrenheitACelsius {</span>
+
+    /**
+     * Convierte una temperatura de Fahrenheit a Celsius.
+     *
+     * Este metodo toma una temperatura en grados Fahrenheit como entrada y devuelve la temperatura
+     * equivalente en grados Celsius.
+     *
+     * @param fahrenheit La temperatura en grados Fahrenheit a convertir.
+     * @return La temperatura equivalente en grados Celsius.
+     * @throws TemperaturaBajoCeroKelvinException Si la temperatura Fahrenheit está por debajo del cero absoluto.
+     *
+     * Ejemplo de uso:
+     * FahrenheitACelsius conversor = new FahrenheitACelsius();
+     * float celsius = conversor.convertir(68); // celsius será 20.0
+     */
+    public float convertir (float fahrenheit) throws TemperaturaBajoCeroKelvinException {
+        // Verifica si la temperatura Fahrenheit esta por debajo del cero absoluto
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (fahrenheit &lt; -459.67f) {</span>
+            // Lanza una excepcion si la temperatura esta por debajo del cero absoluto
+<span class="fc" id="L33">            throw new TemperaturaBajoCeroKelvinException(&quot;¡La temperatura no puede estar por debajo de 0 K!&quot;);</span>
+        }
+
+        // Realiza la conversion de Fahrenheit a Celsius usando la formula: (ºF - 32) * 5/9
+<span class="fc" id="L37">        float celsius = (fahrenheit - 32) * (5f / 9f);</span>
+
+        // Redondea el resultado a dos decimales
+<span class="fc" id="L40">        celsius = Math.round(celsius * 100) / 100.0f;</span>
+
+        // Devuelve la temperatura en grados Celsius
+<span class="fc" id="L43">        return celsius;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

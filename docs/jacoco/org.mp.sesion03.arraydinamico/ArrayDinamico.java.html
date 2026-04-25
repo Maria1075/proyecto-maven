@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayDinamico.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SotoZapataMariaCamilaMP2025</a> &gt; <a href="index.source.html" class="el_package">org.mp.sesion03.arraydinamico</a> &gt; <span class="el_source">ArrayDinamico.java</span></div><h1>ArrayDinamico.java</h1><pre class="source lang-java linenums">/*
+ * @author Maria Camila Soto Zapata
+ * @sinse 2025
+ */
+package org.mp.sesion03.arraydinamico;
+import java.util.Arrays;
+
+/**
+ * Representa una lista de valores enteros que puede crecer y disminuir.
+ * @param &lt;T&gt;
+ */
+public class ArrayDinamico&lt;T&gt; {
+    
+    private T[] elementos;  
+    private int numElementos;
+
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ArrayDinamico() {
+<span class="fc" id="L20">		super();</span>
+<span class="fc" id="L21">		elementos = (T[]) new Object[10];</span>
+<span class="fc" id="L22">		numElementos=0;</span>
+<span class="fc" id="L23">	}</span>
+    
+	/**
+     * Devuelve el elemento en un índice dado en el array. 
+     * Lanza ArrayIndexOutOfBoundsException si el índice no es válido.
+     */
+    public T obtener(int indice) {
+<span class="pc bpc" id="L30" title="2 of 4 branches missed.">        if (indice &lt; 0 || indice &gt;= numElementos)</span>
+<span class="nc" id="L31">            throw new ArrayIndexOutOfBoundsException(&quot;Índice no válido, &quot; + indice);</span>
+<span class="fc" id="L32">        return elementos[indice];</span>
+    }
+    
+    /**
+     * Establece el valor del elemento del array en un índice dado. 
+     * Lanza ArrayIndexOutOfBoundsException si el índice no es válido.
+     */
+    public void establecer(int indice, T elemento) {
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">        if (indice &lt; 0 || indice &gt;= numElementos)</span>
+<span class="nc" id="L41">            throw new ArrayIndexOutOfBoundsException(&quot;Índice no válido, &quot; + indice);</span>
+<span class="fc" id="L42">        elementos[indice] = elemento;</span>
+<span class="fc" id="L43">    }</span>
+    
+    /**
+     * Devuelve la cantidad de elementos actualmente en el array.
+     */
+    public int capacidad() {
+<span class="fc" id="L49">        return numElementos;</span>
+    }
+    
+    /**
+     * Agrega un nuevo elemento al final del array. El tamaño aumenta en uno.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public void agregar(T elemento) {
+    	
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    	if (numElementos == elementos.length) {</span>
+<span class="fc" id="L59">    	    T[] nuevosElementos = (T[]) new Object[2 * elementos.length];</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">    	    for (int i = 0; i &lt; elementos.length; i++) {</span>
+<span class="fc" id="L61">    	        nuevosElementos[i] = elementos[i];</span>
+    	    }
+<span class="fc" id="L63">    	    elementos = nuevosElementos;</span>
+    	}       
+<span class="fc" id="L65">        elementos[numElementos] = elemento;</span>
+<span class="fc" id="L66">        numElementos++;</span>
+<span class="fc" id="L67">    }</span>
+    
+    /**
+     * Elimina el elemento en un índice dado en el array. El tamaño del array
+     * disminuye en uno. Los elementos siguientes al elemento eliminado se mueven
+     * una posición hacia abajo en el array.
+     * Lanza ArrayIndexOutOfBoundsException si el índice no es válido.
+     */
+    public void eliminar(int indice) {
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">        if (indice &lt; 0 || indice &gt;= numElementos)</span>
+<span class="fc" id="L77">            throw new ArrayIndexOutOfBoundsException(&quot;Índice no válido, &quot; + indice);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int j = indice + 1; j &lt; numElementos; j++)</span>
+<span class="fc" id="L79">            elementos[j - 1] = elementos[j];</span>
+<span class="fc" id="L80">        numElementos--;</span>
+<span class="fc" id="L81">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
