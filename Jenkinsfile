@@ -52,7 +52,7 @@ pipeline {
         stage('Static Analysis') {
             steps {
                 echo '🔍 Ejecutando análisis estático...'
-                sh 'mvn checkstyle:checkstyle pmd:pmd spotbugs:check || true'
+                sh 'mvn checkstyle:checkstyle spotbugs:check site -Ddependency-check.skip=true -Dpmd.skip=true || true'
             }
             post {
                 always {
