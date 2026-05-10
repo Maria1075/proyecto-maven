@@ -48,10 +48,10 @@ import java.util.Arrays;
 <span class="fc bfc" id="L48" title="All 2 branches covered.">            if (array[medio] == numBuscado)</span>
 <span class="fc" id="L49">                return medio;</span>
 
-<span class="fc bfc" id="L51" title="All 2 branches covered.">            if ((int) array[medio] &gt; numBuscado)</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if ((int) array[medio] &gt; numBuscado)</span>
 <span class="fc" id="L52">                der = medio - 1;</span>
             else
-<span class="fc" id="L54">                izq = medio + 1;</span>
+<span class="nc" id="L54">                izq = medio + 1;</span>
 <span class="fc" id="L55">        }</span>
 <span class="fc" id="L56">        throw new ElementoNoEncontradoException(&quot;Elemento &quot; + numBuscado + &quot; no encontrado en el array.&quot;);</span>
     }
@@ -98,7 +98,7 @@ import java.util.Arrays;
 <span class="fc bfc" id="L98" title="All 2 branches covered.">        if (array[medio] == numBuscado)</span>
 <span class="fc" id="L99">            return medio;</span>
 <span class="fc bfc" id="L100" title="All 2 branches covered.">        else if ((int) array[medio] &gt; numBuscado)</span>
-<span class="fc" id="L101">            return busquedaBinariaRec(busqueda, izq, medio - 1);</span>
+<span class="nc" id="L101">            return busquedaBinariaRec(busqueda, izq, medio - 1);</span>
         else
 <span class="fc" id="L103">            return busquedaBinariaRec(busqueda, medio + 1, der);</span>
     }
