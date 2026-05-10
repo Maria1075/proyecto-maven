@@ -58,6 +58,9 @@ pipeline {
                 always {
                     // Publicar reportes de análisis estático
                     publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
                         reportDir: 'target/site',
                         reportFiles: 'checkstyle.html, pmd.html, spotbugs.html',
                         reportName: 'Static Analysis Reports'
@@ -74,6 +77,9 @@ pipeline {
             post {
                 always {
                     publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,               
                         reportDir: 'target/site',
                         reportFiles: 'index.html',
                         reportName: 'Maven Site'
@@ -90,6 +96,9 @@ pipeline {
             post {
                 always {
                     publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
                         reportDir: 'target/site/apidocs',
                         reportFiles: 'index.html',
                         reportName: 'Javadoc API'
