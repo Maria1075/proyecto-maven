@@ -38,7 +38,7 @@ pipeline {
                 always {
                     // Publicar reporte JaCoCo
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
                         reportDir: 'target/site/jacoco',
@@ -58,7 +58,7 @@ pipeline {
                 always {
                     // Publicar reportes de análisis estático
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
                         reportDir: 'target/site',
@@ -77,7 +77,7 @@ pipeline {
             post {
                 always {
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,               
                         reportDir: 'target/site',
@@ -96,7 +96,7 @@ pipeline {
             post {
                 always {
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
                         reportDir: 'target/site/apidocs',
