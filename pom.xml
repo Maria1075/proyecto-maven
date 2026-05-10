@@ -144,7 +144,6 @@
                 <version>${pmd.version}</version>
                 <configuration>
                     <failOnViolation>false</failOnViolation>
-                    <targetJdk>21</targetJdk>
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                 </configuration>
                 <executions>
