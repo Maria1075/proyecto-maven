@@ -3,15 +3,16 @@
 [![Maven Build](https://github.com/Maria1075/proyecto-maven/actions/workflows/maven-build.yml/badge.svg)](https://github.com/Maria1075/proyecto-maven/actions/workflows/maven-build.yml)
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptium.net/)
 [![Maven](https://img.shields.io/badge/Maven-3.9.0-red.svg)](https://maven.apache.org/)
+[![Jenkins](https://img.shields.io/badge/Jenkins-CI-blue?logo=jenkins)](http://20.127.236.41:8080)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Descripción
+## 📋 Descripción
 
-Proyecto Maven para prácticas de **Integración Continua** con Jenkins y GitHub Actions.
+Proyecto Maven para prácticas de **Integración Continua** con Jenkins, GitHub Actions y pruebas de aceptación con Selenium.
 
 **Autor:** María Camila Soto Zapata
 
-## Tecnologías y Herramientas
+## 🛠️ Tecnologías y Herramientas
 
 | Herramienta | Versión | Uso |
 |-------------|---------|-----|
@@ -22,25 +23,28 @@ Proyecto Maven para prácticas de **Integración Continua** con Jenkins y GitHub
 | Checkstyle | 3.6.0 | Estilo de código |
 | PMD | 3.21.0 | Análisis estático |
 | Spotbugs | 4.8.6.0 | Búsqueda de bugs |
+| Selenium WebDriver | 4.21.0 | Pruebas de aceptación / Cross-browser |
 | Jenkins | - | CI/CD (VM Azure) |
 | GitHub Actions | - | CI/CD automático |
 
-## Estado del Build
+## 📊 Estado del Build
 
 El badge de arriba muestra el estado del último build en **GitHub Actions**.
 
 | Pipeline | Estado |
 |----------|--------|
 | GitHub Actions | [![Maven Build](https://github.com/Maria1075/proyecto-maven/actions/workflows/maven-build.yml/badge.svg)](https://github.com/Maria1075/proyecto-maven/actions/workflows/maven-build.yml) |
-| Jenkins | [![Jenkins](https://img.shields.io/badge/Jenkins-CI-blue?logo=jenkins)](http://tu-ip-azure:8080) |
+| Jenkins (Maven) | [![Jenkins](https://img.shields.io/badge/Jenkins-Maven-blue?logo=jenkins)](http://20.127.236.41:8080/job/ej07-maven-msz016/) |
+| Jenkins (Pipeline) | [![Jenkins](https://img.shields.io/badge/Jenkins-Pipeline-blue?logo=jenkins)](http://20.127.236.41:8080/job/ej07-pipeline-msz016/) |
+| Jenkins (Selenium) | [![Jenkins](https://img.shields.io/badge/Jenkins-Selenium-blue?logo=jenkins)](http://20.127.236.41:8080/job/selenium-tests-msz016/) |
 
-## Comandos útiles
+## 🚀 Comandos útiles
 
 ```bash
 # Compilar el proyecto
 mvn clean compile
 
-# Ejecutar tests
+# Ejecutar tests unitarios
 mvn test
 
 # Generar reporte de cobertura
